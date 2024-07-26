@@ -3,11 +3,12 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### Eclipse ###
+### Eclipse ###s
 .apt_generated
 .classpath
 .factorypath
 .project
+.class
 .settings
 .springBeans
 .sts4-cache
