@@ -17,9 +17,7 @@ public class ReaderService
 
     public void registerReader(Reader reader)
     {
-        List<String> users = FileManager.readFile(USERS_FILE_PATH);
-        users.add(reader.toString()); // You can format this string as needed
-        FileManager.writeFile(USERS_FILE_PATH, users);
+        FileManager.writeFile(USERS_FILE_PATH, reader.toString());
     }
 
     public void editReader(Reader reader)

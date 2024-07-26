@@ -15,9 +15,7 @@ public class AdminService
 
     public void addBook(Book book)
     {
-        List<String> books = FileManager.readFile(BOOKS_FILE_PATH);
-        books.add(book.toString()); // You can format this string as needed
-        FileManager.writeFile(BOOKS_FILE_PATH, books);
+        FileManager.writeFile(BOOKS_FILE_PATH, book.toString());
     }
 
     public void editBook(Book book)

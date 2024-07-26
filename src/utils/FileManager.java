@@ -28,15 +28,12 @@ public class FileManager
         return lines;
     }
 
-    public static void writeFile(String filePath, List<String> lines)
+    public static void writeFile(String filePath, String line)
     {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath)))
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true)))
         {
-            for (String line : lines)
-            {
-                bw.write(line);
-                bw.newLine();
-            }
+            bw.write(line);
+            bw.newLine(); 
         }
         catch (IOException e)
         {
