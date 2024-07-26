@@ -1,20 +1,11 @@
 package services;
 
-import models.Book;
-import models.Reader;
-import utils.FileManager;
-import utils.Menu;
-import utils.OutputManager;
-import java.util.InputMismatchException;
+import models.*;
+import utils.*;
 import java.util.List;
-import java.util.Scanner;
 
-public class ReaderService
+public class ReaderService extends UserService
 {
-
-    private static final String USERS_FILE_PATH = "resources/users.txt";
-    private static final String BOOKS_FILE_PATH = "resources/books.txt";
-
     public void registerReader(Reader reader)
     {
         FileManager.writeFile(USERS_FILE_PATH, reader.toString());
@@ -43,89 +34,59 @@ public class ReaderService
         // Implement order logic
     }
 
-    public static boolean Login(String email, String password)
-    {
-        return true;
-    }
-
     public static void showReaderMenu()
     {
-        try (Scanner scanner = new Scanner(System.in))
+        InputManager inputManager = new InputManager();
+
+        OutputManager.clearTerminal();
+
+        while (true)
         {
-            OutputManager.clearTerminal();
+            System.out.println("[1] Login");
+            System.out.println("[2] Register");
+            System.out.println("[0] Exit");
+            System.out.println("\nEnter your choice: ");
 
-            while (true)
+            switch (inputManager.getIntInput())
             {
-                System.out.println("[1] Login");
-                System.out.println("[2] Register");
-                System.out.println("[0] Exit");
-                System.out.println("\nEnter your choice: ");
+                case 1:
+                    if (Login())
+                    {
+                        OutputManager.clearTerminal();
+                        OutputManager.printWithColor("Login successful!\n", "32m");
 
-                int choice = 0;
-                try
-                {
-                    choice = scanner.nextInt();
-                }
-                catch (InputMismatchException e)
-                {
-                    OutputManager.clearTerminal();
-                    OutputManager.printWithColor("Invalid choice!\n", "31m");
-                    scanner.next();
-                    continue;
-                }
-
-                switch (choice)
-                {
-                    case 1:
-                        if (Login("", ""))
+                        while (true)
                         {
-                            OutputManager.clearTerminal();
-                            OutputManager.printWithColor("Login successful!\n", "32m");
+                            System.out.println("[1] Edit Account Information");
+                            System.out.println("[2] Display Available Books");
+                            System.out.println("[3] Order Book");
+                            System.out.println("[4] Search For A Book");
+                            System.out.println("[0] Logout");
+                            System.out.println("\nEnter your choice: ");
 
-                            while (true)
+                            switch (inputManager.getIntInput())
                             {
-                                System.out.println("[1] Edit Account Information");
-                                System.out.println("[2] Display Available Books");
-                                System.out.println("[3] Order Book");
-                                System.out.println("[4] Search For A Book");
-                                System.out.println("[0] Logout");
-                                System.out.println("\nEnter your choice: ");
-
-                                try
-                                {
-                                    choice = scanner.nextInt();
-                                }
-                                catch (InputMismatchException e)
-                                {
-                                    OutputManager.invalidChoice();
-                                    scanner.next();
+                                case 0:
+                                    // Logout and dispose of all logged in user data
+                                    OutputManager.clearTerminal();
+                                    Menu.showMainMenu();
                                     continue;
-                                }
-
-                                switch (choice)
-                                {
-                                    case 0:
-                                        // Logout and dispose of all logged in user data
-                                        OutputManager.clearTerminal();
-                                        Menu.showMainMenu();
-                                        continue;
-                                    default:
-                                        OutputManager.invalidChoice();
-                                        break;
-                                }
+                                default:
+                                    OutputManager.invalidChoice();
+                                    break;
                             }
                         }
-                        break;
-                    case 2:
-                        // Register
-                        break;
-                    case 0:
-                        OutputManager.exit();
-                        break;
-                    default:
-                        OutputManager.invalidChoice();
-                        break;
-                }
+                    }
+                    break;
+                case 2:
+                    // Register
+                    break;
+                case 0:
+                    OutputManager.exit();
+                    break;
+                default:
+                    OutputManager.invalidChoice();
+                    break;
             }
         }
     }
