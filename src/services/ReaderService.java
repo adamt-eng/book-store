@@ -3,11 +3,11 @@ package services;
 import models.Book;
 import models.Reader;
 import utils.FileManager;
+import utils.Menu;
 import utils.OutputManager;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import main.Main;
 
 public class ReaderService
 {
@@ -109,7 +109,7 @@ public class ReaderService
                                     case 0:
                                         // Logout and dispose of all logged in user data
                                         OutputManager.clearTerminal();
-                                        Main.showMainMenu();
+                                        Menu.showMainMenu();
                                         continue;
                                     default:
                                         OutputManager.invalidChoice();

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import models.Book;
 import utils.FileManager;
+import utils.Menu;
 import utils.OutputManager;
-import main.Main;
 
 public class AdminService
 {
@@ -104,7 +104,7 @@ public class AdminService
                                     case 0:
                                         // Logout and dispose of all logged in user data
                                         OutputManager.clearTerminal();
-                                        Main.showMainMenu();
+                                        Menu.showMainMenu();
                                         continue;
                                     default:
                                         OutputManager.invalidChoice();
@@ -115,7 +115,7 @@ public class AdminService
                         break;
                     case 0:
                         OutputManager.clearTerminal();
-                        Main.showMainMenu();
+                        Menu.showMainMenu();
                         continue;
                     default:
                         OutputManager.invalidChoice();

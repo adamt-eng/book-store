@@ -1,11 +1,11 @@
-package main;
+package utils;
 
-import utils.*;
-import services.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import services.AdminService;
+import services.ReaderService;
 
-public class Main
+public class Menu
 {
     public static void showMainMenu()
     {
@@ -47,12 +47,5 @@ public class Main
                 }
             }
         }
-    }
-
-    public static void main(String[] args)
-    {
-        System.out.println("Welcome to our Book Store!");
-
-        showMainMenu();
     }
 }
