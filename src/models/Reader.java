@@ -16,7 +16,6 @@ public class Reader extends User implements ReaderService, BookService
         setPaymentMethod(paymentMethod);
     }
 
-    // Getters and Setters
     public String getPhoneNumber()
     {
         return phoneNumber;

@@ -2,7 +2,7 @@ package services;
 
 public interface ReaderService
 {
-    public void editReader();
+    public void editInformation();
     public void orderBook();
     public void register();
 }
