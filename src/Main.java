@@ -1,11 +1,9 @@
 import utils.Menu;
 
-public class Main
-{
-    public static void main(String[] args)
-    {
+public class Main {
+    public static void main(String[] args) {
         System.out.println("Welcome to our Book Store!");
-
+        System.out.println("hello world");
         Menu.showMainMenu();
     }
 }
