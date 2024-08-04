@@ -1,19 +1,18 @@
 package models;
 
-import java.util.List;
-import services.AdminService;
-import utils.FileManager;
+import services.*;
+import utils.*;
 
-public class Admin extends User implements AdminService
+public class Admin extends User implements AdminService, BookService
 {
     public Admin(String username, String email, String password)
     {
         super(username, email, password);
     }
 
-    public void addBook(Book book)
+    public void addBook()
     {
-        FileManager.writeFile(BOOKS_FILE_PATH, book.toString());
+
     }
 
     public void editBook(Book book)
@@ -31,9 +30,8 @@ public class Admin extends User implements AdminService
         
     }
 
-    public Book searchBook(String bookName)
+    public void searchBook()
     {
-        // Implement search logic
-        return null;
+        
     }
 }

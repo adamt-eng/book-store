@@ -6,9 +6,7 @@ import utils.*;
 
 public class Reader extends User implements ReaderService, BookService
 {
-    private String phoneNumber;
-    private String address;
-    private String paymentMethod;
+    private String phoneNumber, address, paymentMethod;
 
     public Reader(String username, String email, String password, String phoneNumber,
                     String address, String paymentMethod)
@@ -57,12 +55,12 @@ public class Reader extends User implements ReaderService, BookService
 
     public void displayBooks()
     {
-        List<String> books = FileManager.readFile(BOOKS_FILE_PATH);
+        List<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
         // Filter books to show only available ones
 
     }
 
-    public Book searchBook(String bookName)
+    public void searchBook(String bookName)
     {
         // Implement search logic
         return null;
@@ -75,7 +73,7 @@ public class Reader extends User implements ReaderService, BookService
 
     public void register()
     {
-        FileManager.writeFile(READERS_FILE_PATH, username + "," + email + "," + password + ","
-                        + phoneNumber + "," + address + "," + paymentMethod);
+        FileManager.writeFile(Constants.READERS_FILE_PATH, username + "," + email + "," + password
+                        + "," + phoneNumber + "," + address + "," + paymentMethod);
     }
 }

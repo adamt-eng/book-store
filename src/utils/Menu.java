@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.util.*;
 import models.*;
 
@@ -61,24 +62,35 @@ public class Menu
 
             switch (inputManager.getIntInput())
             {
-                case 1:
-                    if (User.Login("admin"))
+                case 1: {
+                    OutputManager.clearTerminal();
+                    OutputManager.printWithColor("Login\n", "96m");
+
+                    System.out.print("Username: ");
+                    String username = inputManager.getStringInput();
+
+                    System.out.print("Password: ");
+                    String password = inputManager.getStringInput();
+
+                    String loginResult = User.login(username, password, "admin");
+                    if (loginResult != "N/A")
                     {
                         OutputManager.clearTerminal();
                         OutputManager.printWithColor("Login successful!\n", "32m");
+                        
+                        Admin admin = new Admin(username, loginResult.split(",")[0], password);
 
                         while (true)
                         {
                             System.out.println("[1] Add Book");
-                            System.out.println("[2] Edit Book");
-                            System.out.println("[3] Delete Book");
-                            System.out.println("[4] Display All Books");
-                            System.out.println("[5] Search For A Book");
+                            System.out.println("[2] Search For A Book");
                             System.out.println("[0] Logout");
                             System.out.println("\nEnter your choice: ");
 
                             switch (inputManager.getIntInput())
                             {
+                                case 1: admin.addBook(); break;
+                                case 2: admin.searchBook(loginResult)(); break;
                                 case 0:
                                     // Logout and dispose of all logged in user data
                                     OutputManager.clearTerminal();
@@ -90,6 +102,7 @@ public class Menu
                             }
                         }
                     }
+                }
                     break;
                 case 0:
                     OutputManager.clearTerminal();
@@ -117,8 +130,18 @@ public class Menu
 
             switch (inputManager.getIntInput())
             {
-                case 1:
-                    if (User.Login("reader"))
+                case 1: {
+                    OutputManager.clearTerminal();
+                    OutputManager.printWithColor("Login\n", "96m");
+
+                    System.out.print("Username: ");
+                    String username = inputManager.getStringInput();
+
+                    System.out.print("Password: ");
+                    String password = inputManager.getStringInput();
+
+                    String loginResult = User.login(username, password, "reader");
+                    if (loginResult != "N/A")
                     {
                         OutputManager.clearTerminal();
                         OutputManager.printWithColor("Login successful!\n", "32m");
@@ -146,7 +169,8 @@ public class Menu
                         }
                     }
                     break;
-                case 2:
+                }
+                case 2: {
                     OutputManager.clearTerminal();
                     OutputManager.printWithColor("Register\n", "96m");
 
@@ -174,6 +198,7 @@ public class Menu
 
                     OutputManager.clearTerminal();
                     OutputManager.printWithColor("Registration successful!\n", "32m");
+                }
                     break;
                 case 0:
                     OutputManager.exit();

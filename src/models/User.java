@@ -5,9 +5,6 @@ import utils.*;
 public abstract class User
 {
     protected String username, email, password;
-    protected static final String READERS_FILE_PATH = "resources/readers.txt";
-    protected static final String ADMINS_FILE_PATH = "resources/admins.txt";
-    protected static final String BOOKS_FILE_PATH = "resources/books.txt";
 
     public User(String username, String email, String password)
     {
@@ -45,28 +42,17 @@ public abstract class User
     {
         this.password = password;
     }
-
-    public static boolean Login(String accountType)
+    
+    public static String login(String username, String password, String accountType)
     {
-        InputManager inputManager = new InputManager();
-
-        OutputManager.clearTerminal();
-        OutputManager.printWithColor("Login\n", "96m");
-
-        System.out.print("Email: ");
-        String email_ = inputManager.getStringInput();
-
-        System.out.print("Password: ");
-        String password_ = inputManager.getStringInput();
-
-        for (String user : FileManager.readFile(accountType == "admin" ? ADMINS_FILE_PATH : READERS_FILE_PATH))
+        for (String user : FileManager.readFile(accountType == "admin" ? Constants.ADMINS_FILE_PATH : Constants.READERS_FILE_PATH))
         {
-            if (user.contains(email_ + "," + password_))
+            if (user.contains(username + "," + password))
             {
-                return true;
+                return user;
             }
         }
 
-        return false;
+        return "N/A";
     }
 }

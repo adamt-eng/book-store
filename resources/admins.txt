@@ -1,2 +1,2 @@
-username,email,password
-adam,adam@gmail.com,adampass
+email,username,password,phoneNumber,address,paymentMethod
+adam@gmail.com,adam,adampass
