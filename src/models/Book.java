@@ -10,11 +10,11 @@ public class Book
 
     public Book(String name, String author, double price, int stock, String category)
     {
-        this.name = name;
-        this.author = author;
-        this.price = price;
-        this.stock = stock;
-        this.category = category;
+        setName(name);
+        setAuthor(author);
+        setPrice(price);
+        setStock(stock);
+        setCategory(category);
     }
 
     // Getters and Setters

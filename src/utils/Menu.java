@@ -2,9 +2,7 @@ package utils;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import models.Admin;
 import models.User;
-import services.*;
 
 public class Menu
 {
@@ -65,7 +63,7 @@ public class Menu
             switch (inputManager.getIntInput())
             {
                 case 1:
-                    if (User.Login())
+                    if (User.Login("admin"))
                     {
                         OutputManager.clearTerminal();
                         OutputManager.printWithColor("Login successful!\n", "32m");
@@ -121,7 +119,7 @@ public class Menu
             switch (inputManager.getIntInput())
             {
                 case 1:
-                    if (User.Login())
+                    if (User.Login("reader"))
                     {
                         OutputManager.clearTerminal();
                         OutputManager.printWithColor("Login successful!\n", "32m");
@@ -150,7 +148,7 @@ public class Menu
                     }
                     break;
                 case 2:
-                    // Register
+                    Reader.register();
                     break;
                 case 0:
                     OutputManager.exit();

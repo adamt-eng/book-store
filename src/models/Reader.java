@@ -1,10 +1,13 @@
 package models;
 
 import java.util.List;
+import services.BookService;
 import services.ReaderService;
 import utils.FileManager;
+import utils.InputManager;
+import utils.OutputManager;
 
-public class Reader extends User implements ReaderService
+public class Reader extends User implements ReaderService, BookService
 {
     private String phoneNumber;
     private String address;
@@ -14,9 +17,9 @@ public class Reader extends User implements ReaderService
                     String address, String paymentMethod)
     {
         super(username, email, password);
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.paymentMethod = paymentMethod;
+        setPhoneNumber(phoneNumber);
+        setAddress(address);
+        setPaymentMethod(paymentMethod);
     }
 
     // Getters and Setters
@@ -50,17 +53,12 @@ public class Reader extends User implements ReaderService
         this.paymentMethod = paymentMethod;
     }
 
-    public void registerReader(Reader reader)
-    {
-        FileManager.writeFile(USERS_FILE_PATH, reader.toString());
-    }
-
     public void editReader(Reader reader)
     {
         // Implement edit logic
     }
 
-    public List<String> displayAvailableBooks()
+    public List<String> displayBooks()
     {
         List<String> books = FileManager.readFile(BOOKS_FILE_PATH);
         // Filter books to show only available ones
@@ -76,5 +74,23 @@ public class Reader extends User implements ReaderService
     public void orderBook(String bookName)
     {
         // Implement order logic
+    }
+
+    public void register()
+    {
+        InputManager inputManager = new InputManager();
+
+        OutputManager.clearTerminal();
+
+        System.out.print("Username: ");
+        String username_ = inputManager.getStringInput();
+
+        System.out.print("Email: ");
+        String email_ = inputManager.getStringInput();
+
+        System.out.print("Password: ");
+        String password_ = inputManager.getStringInput();
+
+        FileManager.writeFile(READERS_FILE_PATH, username_ + "," + email_ + "," + password_);
     }
 }
