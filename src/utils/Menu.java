@@ -2,6 +2,7 @@ package utils;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import models.Reader;
 import models.User;
 
 public class Menu
@@ -148,7 +149,8 @@ public class Menu
                     }
                     break;
                 case 2:
-                    Reader.register();
+                Reader reader = new Reader();
+                reader.register();
                     break;
                 case 0:
                     OutputManager.exit();

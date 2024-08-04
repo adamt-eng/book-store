@@ -5,6 +5,6 @@ import models.Book;
 
 public interface BookService 
 {
-    public List<String> displayAvailableBooks();
+    public List<String> displayBooks();
     public Book searchBook(String bookName);
 }
