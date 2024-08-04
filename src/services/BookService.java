@@ -1,9 +1,8 @@
 package services;
 
-import models.Book;
-
 public interface BookService 
-{
-    public void displayBooks();
+{    
+    public void displayBook(String bookName);
+    public void displayBooks(boolean unavailableBooks);
     public void searchBook();
 }

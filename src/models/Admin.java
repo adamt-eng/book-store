@@ -1,7 +1,6 @@
 package models;
 
 import services.*;
-import utils.*;
 
 public class Admin extends User implements AdminService, BookService
 {
@@ -10,28 +9,34 @@ public class Admin extends User implements AdminService, BookService
         super(username, email, password);
     }
 
-    public void addBook()
+    public void searchBook()
     {
-
+        // Shows "Search for book name:" and then when user presses enter do displayBook(String bookName);
     }
 
-    public void editBook(Book book)
+    public void displayBook(String bookName)
     {
-        // Implement edit logic
-    }
-
-    public void deleteBook(String bookName)
-    {
-        // Implement delete logic
+        // Displays book info (one book)
     }
 
     public void displayBooks()
     {
-        
+        // Reads file and displays the books and in the end shows an action menu (delete/edit)
     }
 
-    public void searchBook()
+    public void addBook()
     {
-        
+        // Reads book data then writes it to file
     }
+
+    public void editBook()
+    {
+        // Selected after Search Book or Display Books, takes input on which book to edit
+    }
+
+    public void deleteBook()
+    {
+        // Selected after Search Book or Display Books, takes input on which book to delete
+    }
+    
 }

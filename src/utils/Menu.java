@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.File;
 import java.util.*;
 import models.*;
 
@@ -77,22 +76,30 @@ public class Menu
                     {
                         OutputManager.clearTerminal();
                         OutputManager.printWithColor("Login successful!\n", "32m");
-                        
+
                         Admin admin = new Admin(username, loginResult.split(",")[0], password);
 
                         while (true)
                         {
                             System.out.println("[1] Add Book");
                             System.out.println("[2] Search For A Book");
+                            System.out.println("[3] Display All Books");
                             System.out.println("[0] Logout");
                             System.out.println("\nEnter your choice: ");
 
                             switch (inputManager.getIntInput())
                             {
-                                case 1: admin.addBook(); break;
-                                case 2: admin.searchBook(loginResult)(); break;
+                                case 1:
+                                    admin.addBook();
+                                    break;
+                                case 2:
+                                    admin.searchBook();
+                                    break;
+                                case 3:
+                                    admin.displayBooks();
+                                    break;
                                 case 0:
-                                    // Logout and dispose of all logged in user data
+                                    admin = null;
                                     OutputManager.clearTerminal();
                                     Menu.showMainMenu();
                                     continue;
@@ -146,19 +153,36 @@ public class Menu
                         OutputManager.clearTerminal();
                         OutputManager.printWithColor("Login successful!\n", "32m");
 
+                        String data[] = loginResult.split(",");
+                        String email = data[0];
+                        String phoneNumber = data[3];
+                        String address = data[4];
+                        String paymentMethod = data[5];
+
+                        Reader reader = new Reader(username, email, password, phoneNumber, address,
+                                        paymentMethod);
+
                         while (true)
                         {
                             System.out.println("[1] Edit Account Information");
-                            System.out.println("[2] Display Available Books");
-                            System.out.println("[3] Order Book");
-                            System.out.println("[4] Search For A Book");
+                            System.out.println("[2] Search For A Book");
+                            System.out.println("[3] Display All Books");
                             System.out.println("[0] Logout");
                             System.out.println("\nEnter your choice: ");
 
                             switch (inputManager.getIntInput())
                             {
+                                case 1:
+                                    reader.editInformation();
+                                    break;
+                                case 2:
+                                    reader.searchBook();
+                                    break;
+                                case 3:
+                                    reader.displayBooks();
+                                    break;
                                 case 0:
-                                    // Logout and dispose of all logged in user data
+                                    reader = null;
                                     OutputManager.clearTerminal();
                                     Menu.showMainMenu();
                                     continue;

@@ -1,6 +1,5 @@
 package models;
 
-import java.util.List;
 import services.*;
 import utils.*;
 
@@ -48,27 +47,29 @@ public class Reader extends User implements ReaderService, BookService
         this.paymentMethod = paymentMethod;
     }
 
-    public void editReader(Reader reader)
+    public void searchBook()
     {
-        // Implement edit logic
+        // Shows "Search for book name:" and then when user presses enter do displayBook(String bookName);
+    }
+
+    public void displayBook(String bookName)
+    {
+        // Displays book info (one book)
     }
 
     public void displayBooks()
     {
-        List<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        // Filter books to show only available ones
+        // Reads file and displays the books and in the end shows an action menu (order)
+    }
+
+    public void editInformation()
+    {
 
     }
 
-    public void searchBook(String bookName)
+    public void orderBook()
     {
-        // Implement search logic
-        return null;
-    }
 
-    public void orderBook(String bookName)
-    {
-        // Implement order logic
     }
 
     public void register()

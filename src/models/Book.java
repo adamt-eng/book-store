@@ -1,6 +1,8 @@
 package models;
 
-public class Book
+import services.BookService;
+
+public class Book implements BookService
 {
     private String name;
     private String author;
@@ -66,5 +68,20 @@ public class Book
     public void setCategory(String category)
     {
         this.category = category;
+    }
+
+    public void searchBook()
+    {
+        // Shows "Search for book name:" and then when user presses enter do displayBook(String bookName);
+    }
+
+    public void displayBook(String bookName)
+    {
+        // Displays book info (one book)
+    }
+
+    public void displayBooks(boolean unavailableBooks)
+    {
+        // Reads file and displays the books and in the end shows an action menu (delete/edit)
     }
 }
