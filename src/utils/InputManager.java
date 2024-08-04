@@ -14,26 +14,25 @@ public class InputManager
 
     public int getIntInput()
     {
-        while (true)
+        try
         {
-            try
+            if (scanner.hasNextInt())
             {
-                if (scanner.hasNextInt())
-                {
-                    return scanner.nextInt();
-                }
-                else
-                {
-                    OutputManager.invalidChoice();
-                    scanner.next();
-                }
+                return scanner.nextInt();
             }
-            catch (InputMismatchException e)
+            else
             {
                 OutputManager.invalidChoice();
                 scanner.next();
             }
         }
+        catch (InputMismatchException e)
+        {
+            OutputManager.invalidChoice();
+            scanner.next();
+        }
+
+        return -1;
     }
 
     public String getStringInput()

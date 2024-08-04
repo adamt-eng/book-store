@@ -46,16 +46,6 @@ public class Reader extends User implements ReaderService, BookService
         this.paymentMethod = paymentMethod;
     }
 
-    public void searchBook()
-    {
-        // Shows "Search for book name:" and then when user presses enter do displayBook(String bookName);
-    }
-
-    public void displayBook(String bookName)
-    {
-        // Displays book info (one book)
-    }
-
     public void displayBooks()
     {
         // Reads file and displays the books and in the end shows an action menu (order)
@@ -66,14 +56,14 @@ public class Reader extends User implements ReaderService, BookService
 
     }
 
-    public void orderBook()
+    public void orderBook(String bookName)
     {
-
+        // Confirm order and then minus one from the stock
     }
 
     public void register()
     {
-        FileManager.writeFile(Constants.READERS_FILE_PATH, username + "," + email + "," + password
+        FileManager.appendFile(Constants.READERS_FILE_PATH, username + "," + email + "," + password
                         + "," + phoneNumber + "," + address + "," + paymentMethod);
     }
 }

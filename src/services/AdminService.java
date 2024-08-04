@@ -5,6 +5,6 @@ import models.*;
 public interface AdminService
 {
     public void addBook(Book book);
-    public void editBook();
-    public void deleteBook();
+    public void editBook(String bookName);
+    public void deleteBook(String bookName);
 }

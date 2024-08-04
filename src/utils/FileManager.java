@@ -28,7 +28,22 @@ public class FileManager
         return lines;
     }
 
-    public static void writeFile(String filePath, String line)
+    public static void writeFile(String filePath, List<String> lines)
+    {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath)))
+        {
+            for (String line : lines)
+            {
+                bw.write(line);
+                bw.newLine();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public static void appendFile(String filePath, String line)
     {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true)))
         {

@@ -11,7 +11,7 @@ public class OutputManager
     {
         // Red: 31m
         // Green: 32m
-        // Cyan: 34m
+        // Cyan: 94m
         System.out.println("\033[" + colorCode + text + "\033[0m");
     }
     public static void exit()

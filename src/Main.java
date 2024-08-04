@@ -1,10 +1,11 @@
 import utils.Menu;
+import utils.OutputManager;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        System.out.println("Welcome to our Book Store!");
+        OutputManager.printWithColor("Welcome to our Book Store!\n", "96m");
         Menu.showMainMenu();
     }
 }
