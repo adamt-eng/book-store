@@ -1,9 +1,10 @@
 package models;
 
 import java.util.List;
+import services.AdminService;
 import utils.FileManager;
 
-public class Admin extends User
+public class Admin extends User implements AdminService
 {
     public Admin(String username, String email, String password)
     {
