@@ -83,7 +83,7 @@ public class Menu
         switch (new InputManager().getIntInput())
         {
             case 1:
-                admin.addBook();
+         //       admin.addBook();
                 break;
             case 2:
                 admin.searchBook(admin, false);
