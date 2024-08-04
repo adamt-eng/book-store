@@ -1,9 +1,38 @@
 package models;
 
-public class Admin extends User {
-  public Admin(String username, String email, String password) {
-    super(username, email, password);
-  }
+import java.util.List;
+import utils.FileManager;
 
-  // Admin-specific methods
+public class Admin extends User
+{
+    public Admin(String username, String email, String password)
+    {
+        super(username, email, password);
+    }
+
+    public void addBook(Book book)
+    {
+        FileManager.writeFile(BOOKS_FILE_PATH, book.toString());
+    }
+
+    public void editBook(Book book)
+    {
+        // Implement edit logic
+    }
+
+    public void deleteBook(String bookName)
+    {
+        // Implement delete logic
+    }
+
+    public List<String> displayAllBooks()
+    {
+        return FileManager.readFile(BOOKS_FILE_PATH);
+    }
+
+    public Book searchBook(String bookName)
+    {
+        // Implement search logic
+        return null;
+    }
 }

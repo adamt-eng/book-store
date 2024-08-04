@@ -1,58 +1,70 @@
 package models;
 
-public class Book {
-  private String name;
-  private String author;
-  private double price;
-  private int stock;
-  private String category;
+public class Book
+{
+    private String name;
+    private String author;
+    private double price;
+    private int stock;
+    private String category;
 
-  public Book(String name, String author, double price, int stock, String category) {
-    this.name = name;
-    this.author = author;
-    this.price = price;
-    this.stock = stock;
-    this.category = category;
-  }
+    public Book(String name, String author, double price, int stock, String category)
+    {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.stock = stock;
+        this.category = category;
+    }
 
-  // Getters and Setters
-  public String getName() {
-    return name;
-  }
+    // Getters and Setters
+    public String getName()
+    {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-  public String getAuthor() {
-    return author;
-  }
+    public String getAuthor()
+    {
+        return author;
+    }
 
-  public void setAuthor(String author) {
-    this.author = author;
-  }
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
 
-  public double getPrice() {
-    return price;
-  }
+    public double getPrice()
+    {
+        return price;
+    }
 
-  public void setPrice(double price) {
-    this.price = price;
-  }
+    public void setPrice(double price)
+    {
+        this.price = price;
+    }
 
-  public int getStock() {
-    return stock;
-  }
+    public int getStock()
+    {
+        return stock;
+    }
 
-  public void setStock(int stock) {
-    this.stock = stock;
-  }
+    public void setStock(int stock)
+    {
+        this.stock = stock;
+    }
 
-  public String getCategory() {
-    return category;
-  }
+    public String getCategory()
+    {
+        return category;
+    }
 
-  public void setCategory(String category) {
-    this.category = category;
-  }
+    public void setCategory(String category)
+    {
+        this.category = category;
+    }
 }
