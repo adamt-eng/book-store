@@ -1,9 +1,7 @@
 package utils;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import models.Reader;
-import models.User;
+import java.util.*;
+import models.*;
 
 public class Menu
 {
@@ -149,8 +147,33 @@ public class Menu
                     }
                     break;
                 case 2:
-                Reader reader = new Reader();
-                reader.register();
+                    OutputManager.clearTerminal();
+                    OutputManager.printWithColor("Register\n", "96m");
+
+                    System.out.print("Username: ");
+                    String username = inputManager.getStringInput();
+
+                    System.out.print("Email: ");
+                    String email = inputManager.getStringInput();
+
+                    System.out.print("Password: ");
+                    String password = inputManager.getStringInput();
+
+                    System.out.print("Phone Number: ");
+                    String phoneNumber = inputManager.getStringInput();
+
+                    System.out.print("Address: ");
+                    String address = inputManager.getStringInput();
+
+                    System.out.print("Payment Method: ");
+                    String paymentMethod = inputManager.getStringInput();
+
+                    Reader reader = new Reader(username, email, password, phoneNumber, address,
+                                    paymentMethod);
+                    reader.register();
+
+                    OutputManager.clearTerminal();
+                    OutputManager.printWithColor("Registration successful!\n", "32m");
                     break;
                 case 0:
                     OutputManager.exit();

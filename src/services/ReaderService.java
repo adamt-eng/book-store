@@ -1,7 +1,6 @@
 package services;
 
 import models.*;
-import java.util.List;
 
 public interface ReaderService
 {

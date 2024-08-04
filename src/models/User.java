@@ -1,13 +1,13 @@
 package models;
 
-import java.util.List;
-import utils.FileManager;
-import utils.InputManager;
-import utils.OutputManager;
+import utils.*;
 
 public abstract class User
 {
     protected String username, email, password;
+    protected static final String READERS_FILE_PATH = "resources/readers.txt";
+    protected static final String ADMINS_FILE_PATH = "resources/admins.txt";
+    protected static final String BOOKS_FILE_PATH = "resources/books.txt";
 
     public User(String username, String email, String password)
     {
@@ -46,15 +46,12 @@ public abstract class User
         this.password = password;
     }
 
-    protected static final String READERS_FILE_PATH = "resources/readers.txt";
-    protected static final String ADMINS_FILE_PATH = "resources/admins.txt";
-    protected static final String BOOKS_FILE_PATH = "resources/books.txt";
-
     public static boolean Login(String accountType)
     {
         InputManager inputManager = new InputManager();
 
         OutputManager.clearTerminal();
+        OutputManager.printWithColor("Login\n", "96m");
 
         System.out.print("Email: ");
         String email_ = inputManager.getStringInput();
@@ -62,8 +59,7 @@ public abstract class User
         System.out.print("Password: ");
         String password_ = inputManager.getStringInput();
 
-        List<String> users = FileManager.readFile(accountType == "admin" ? ADMINS_FILE_PATH : READERS_FILE_PATH);
-        for (String user : users)
+        for (String user : FileManager.readFile(accountType == "admin" ? ADMINS_FILE_PATH : READERS_FILE_PATH))
         {
             if (user.contains(email_ + "," + password_))
             {

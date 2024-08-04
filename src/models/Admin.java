@@ -26,9 +26,9 @@ public class Admin extends User implements AdminService
         // Implement delete logic
     }
 
-    public List<String> displayAllBooks()
+    public void displayBooks()
     {
-        return FileManager.readFile(BOOKS_FILE_PATH);
+        
     }
 
     public Book searchBook(String bookName)

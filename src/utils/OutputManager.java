@@ -11,11 +11,13 @@ public class OutputManager
     {
         // Red: 31m
         // Green: 32m
+        // Cyan: 34m
         System.out.println("\033[" + colorCode + text + "\033[0m");
     }
     public static void exit()
     {
-        System.out.println("Thanks for visiting our awesome Book Store.\nEXITING...");
+        clearTerminal();
+        printWithColor("Thanks for visiting!", "96m");
         System.exit(0);
     }
     public static void invalidChoice()

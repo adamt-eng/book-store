@@ -1,6 +1,5 @@
 package services;
 
-import java.util.List;
 import models.Book;
 
 public interface AdminService

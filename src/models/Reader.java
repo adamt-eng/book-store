@@ -1,11 +1,8 @@
 package models;
 
 import java.util.List;
-import services.BookService;
-import services.ReaderService;
-import utils.FileManager;
-import utils.InputManager;
-import utils.OutputManager;
+import services.*;
+import utils.*;
 
 public class Reader extends User implements ReaderService, BookService
 {
@@ -58,11 +55,11 @@ public class Reader extends User implements ReaderService, BookService
         // Implement edit logic
     }
 
-    public List<String> displayBooks()
+    public void displayBooks()
     {
         List<String> books = FileManager.readFile(BOOKS_FILE_PATH);
         // Filter books to show only available ones
-        return books;
+
     }
 
     public Book searchBook(String bookName)
@@ -78,19 +75,7 @@ public class Reader extends User implements ReaderService, BookService
 
     public void register()
     {
-        InputManager inputManager = new InputManager();
-
-        OutputManager.clearTerminal();
-
-        System.out.print("Username: ");
-        String username_ = inputManager.getStringInput();
-
-        System.out.print("Email: ");
-        String email_ = inputManager.getStringInput();
-
-        System.out.print("Password: ");
-        String password_ = inputManager.getStringInput();
-
-        FileManager.writeFile(READERS_FILE_PATH, username_ + "," + email_ + "," + password_);
+        FileManager.writeFile(READERS_FILE_PATH, username + "," + email + "," + password + ","
+                        + phoneNumber + "," + address + "," + paymentMethod);
     }
 }
