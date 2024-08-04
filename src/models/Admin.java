@@ -1,6 +1,8 @@
 package models;
 
 import services.*;
+import utils.Constants;
+import utils.FileManager;
 
 public class Admin extends User implements AdminService, BookService
 {
@@ -24,9 +26,11 @@ public class Admin extends User implements AdminService, BookService
         // Reads file and displays the books and in the end shows an action menu (delete/edit)
     }
 
-    public void addBook()
+    public void addBook(Book book)
     {
-        // Reads book data then writes it to file
+        FileManager.writeFile(Constants.BOOKS_FILE_PATH, book.getName() + ", " + book.getAuthor() + ", " + book.getPrice()
+        + ", " + book.getStock() + ", " + book.getPrice());
+
     }
 
     public void editBook()
