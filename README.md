@@ -1,2 +1,2 @@
-# book store management system
+# Book Store Management System
  
