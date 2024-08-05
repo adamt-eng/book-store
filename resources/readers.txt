@@ -1,2 +1,3 @@
 email,username,password,phoneNumber,address,paymentMethod
-adamx,adamx,adampass,01093,ada,ada
+adamx,mohamed,12345,01093,ada,ada
+mohamed,mohamd@gmail.com,1234,011295,gold street,fawry
