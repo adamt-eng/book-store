@@ -1,2 +1,1 @@
-email,username,password,phoneNumber,address,paymentMethod
-adamx,adamx,adampass,01093,ada,ada
+adamx,ADAMX,adampass,01093,ADA,ada
