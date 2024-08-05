@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import services.*;
 import utils.*;
 
-public class Reader extends User implements ReaderService, BookService
+public class Reader extends User implements ReaderService
 {
     private String phoneNumber, address, paymentMethod;
 
@@ -46,46 +46,6 @@ public class Reader extends User implements ReaderService, BookService
     public void setPaymentMethod(String paymentMethod)
     {
         this.paymentMethod = paymentMethod;
-    }
-
-    public void displayBooks()
-    {
-        OutputManager.clearTerminal();
-
-        String[] headers = { "Book Name", "Book Author", "Book Price", "Book Stock", "Book Category" };
-        int[] columnWidths = { 50, 20, 10, 10, 15 };
-
-        // Print the table header
-        printRow(headers, columnWidths);
-        printSeparator(columnWidths);
-
-        // Iterate through the book array and print details
-        for (String book : FileManager.readFile(Constants.BOOKS_FILE_PATH))
-        {
-            if (!book.contains(", 0,")) printRow(book.split(","), columnWidths);
-        }
-    }
-
-    private static void printRow(String[] row, int[] columnWidths)
-    {
-        for (int i = 0; i < row.length; i++)
-        {
-            System.out.printf("| %-" + columnWidths[i] + "s ", row[i]);
-        }
-        System.out.println("|");
-    }
-
-    private static void printSeparator(int[] columnWidths)
-    {
-        for (int width : columnWidths)
-        {
-            System.out.print("+");
-            for (int i = 0; i < width + 2; i++)
-            { // +2 for padding
-                System.out.print("-");
-            }
-        }
-        System.out.println("+");
     }
 
     public void editInformation(boolean invalid)

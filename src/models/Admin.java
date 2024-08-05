@@ -5,16 +5,11 @@ import java.util.ArrayList;
 import services.*;
 import utils.*;
 
-public class Admin extends User implements AdminService, BookService
+public class Admin extends User implements AdminService
 {
     public Admin(String username, String email, String password)
     {
         super(username, email, password);
-    }
-
-    public void displayBooks()
-    {
-        // Reads file and displays the books and in the end shows an action menu (delete/edit)
     }
 
     public void addBook(Book book)

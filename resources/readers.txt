@@ -1,1 +1,1 @@
-adamx,ADAMX,adampass,01093,ADA,ada
+adamx,adamx,adampass,01093,ADA,ada
