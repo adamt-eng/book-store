@@ -31,8 +31,10 @@ public class Menu
 
     public static void showAdminMenu(boolean invalid)
     {
-        if (!invalid) OutputManager.clearTerminal();
-
+        if (!invalid)
+            OutputManager.clearTerminal();
+            
+            OutputManager.printWithColor("Admin\n", "96m");
         System.out.println("[1] Login");
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
@@ -61,6 +63,12 @@ public class Menu
 
                     showAdminFunctions(admin);
                 }
+                else
+                {
+                    OutputManager.clearTerminal();
+                    OutputManager.printWithColor("Incorrect username or password!\n", "31m");
+                    showAdminMenu(true);
+                }
             }
                 break;
             case 0:
@@ -68,6 +76,7 @@ public class Menu
                 Menu.showMainMenu();
             default:
                 OutputManager.invalidChoice();
+                showAdminMenu(true);
                 break;
         }
     }
@@ -83,7 +92,7 @@ public class Menu
         switch (new InputManager().getIntInput())
         {
             case 1:
-         //       admin.addBook();
+                // admin.addBook();
                 break;
             case 2:
                 admin.searchBook(admin, false);
@@ -113,7 +122,7 @@ public class Menu
         switch (new InputManager().getIntInput())
         {
             case 1:
-                reader.editInformation();
+                reader.editInformation(false);
                 break;
             case 2:
                 reader.searchBook(reader, false);
@@ -137,11 +146,13 @@ public class Menu
     {
         InputManager inputManager = new InputManager();
 
-        if (!invalid) OutputManager.clearTerminal();
+        if (!invalid)
+            OutputManager.clearTerminal();
 
-        System.out.println("[1] Login");
+            OutputManager.printWithColor("Reader\n", "96m");
+            System.out.println("[1] Login");
         System.out.println("[2] Register");
-        System.out.println("[0] Exit");
+        System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
         switch (inputManager.getIntInput())
@@ -172,6 +183,13 @@ public class Menu
                                     paymentMethod);
 
                     showReaderFunctions(reader);
+
+                }
+                else
+                {
+                    OutputManager.clearTerminal();
+                    OutputManager.printWithColor("Incorrect username or password!\n", "31m");
+                    showReaderMenu(true);
                 }
                 break;
             }
@@ -206,7 +224,8 @@ public class Menu
             }
                 break;
             case 0:
-                OutputManager.exit();
+                OutputManager.clearTerminal();
+                Menu.showMainMenu();
                 break;
             default:
                 OutputManager.invalidChoice();

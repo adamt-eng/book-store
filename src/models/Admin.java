@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 import services.*;
 import utils.*;
 
@@ -17,8 +19,8 @@ public class Admin extends User implements AdminService, BookService
 
     public void addBook(Book book)
     {
-        FileManager.appendFile(Constants.BOOKS_FILE_PATH, book.getName() + ", " + book.getAuthor() + ", " + book.getPrice()
-        + ", " + book.getStock() + ", " + book.getPrice());
+        FileManager.appendFile(Constants.BOOKS_FILE_PATH, book.getName() + ", " + book.getAuthor() + ", $" + book.getPrice()
+        + ", " + book.getStock() + ", " + book.getCategory());
 
     }
 
@@ -29,7 +31,18 @@ public class Admin extends User implements AdminService, BookService
 
     public void deleteBook(String bookName)
     {
-        // Selected after Search Book or Display Books, takes input on which book to delete
+        ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+
+        for (int i = 0; i < books.size(); i++)
+        {
+            if (books.get(i).contains(bookName))
+            {
+                books.remove(i);
+                break;
+            }
+        }
+
+        FileManager.writeFile(Constants.BOOKS_FILE_PATH, books);
     }
     
 }

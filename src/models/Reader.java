@@ -1,65 +1,58 @@
 package models;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import services.*;
 import utils.*;
 
-public class Reader extends User implements ReaderService, BookService {
+public class Reader extends User implements ReaderService, BookService
+{
     private String phoneNumber, address, paymentMethod;
-    InputManager in = new InputManager();
-    FileManager fileforreader = new FileManager();
-    ArrayList<Book> mybooks = new ArrayList<>();
 
     public Reader(String username, String email, String password, String phoneNumber,
-            String address, String paymentMethod) {
+                    String address, String paymentMethod)
+    {
         super(username, email, password);
         setPhoneNumber(phoneNumber);
         setAddress(address);
         setPaymentMethod(paymentMethod);
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
+    public String getAddress()
+    {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String address)
+    {
         this.address = address;
     }
 
-    public String getPaymentMethod() {
+    public String getPaymentMethod()
+    {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(String paymentMethod)
+    {
         this.paymentMethod = paymentMethod;
     }
 
-    public void displayBooks() {
+    public void displayBooks()
+    {
         OutputManager.clearTerminal();
-        ArrayList<String> books = new ArrayList<>();
-        String delimiter = ",";
-        books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        String[] allbooks = new String[books.size()];
-        String[] bookdetails = new String[5];
-        for (int i = 0; i < books.size(); i++) {
-            allbooks[i] = books.get(i);
-        }
-        String[] headers = { "Book Name", "Book Author", "Book Price", "Book Stock", "Book Category" };
 
-        // Define the column widths
+        String[] headers = { "Book Name", "Book Author", "Book Price", "Book Stock", "Book Category" };
         int[] columnWidths = { 50, 20, 10, 10, 15 };
 
         // Print the table header
@@ -67,94 +60,133 @@ public class Reader extends User implements ReaderService, BookService {
         printSeparator(columnWidths);
 
         // Iterate through the book array and print details
-        for (String book : allbooks) {
-            bookdetails = book.split(delimiter);
-            printRow(bookdetails, columnWidths);
+        for (String book : FileManager.readFile(Constants.BOOKS_FILE_PATH))
+        {
+            if (!book.contains(", 0,")) printRow(book.split(","), columnWidths);
         }
     }
 
-    private static void printRow(String[] row, int[] columnWidths) {
-        for (int i = 0; i < row.length; i++) {
+    private static void printRow(String[] row, int[] columnWidths)
+    {
+        for (int i = 0; i < row.length; i++)
+        {
             System.out.printf("| %-" + columnWidths[i] + "s ", row[i]);
         }
         System.out.println("|");
     }
 
-    private static void printSeparator(int[] columnWidths) {
-        for (int width : columnWidths) {
+    private static void printSeparator(int[] columnWidths)
+    {
+        for (int width : columnWidths)
+        {
             System.out.print("+");
-            for (int i = 0; i < width + 2; i++) { // +2 for padding
+            for (int i = 0; i < width + 2; i++)
+            { // +2 for padding
                 System.out.print("-");
             }
         }
         System.out.println("+");
     }
 
-    public void editInformation() {
-        ArrayList<String> readersinfo = new ArrayList<>();
-        int choice;
-        boolean f = false;
-        int index = 0;
-        readersinfo = FileManager.readFile(Constants.READERS_FILE_PATH);
-        String s = this.email + "," + this.username + "," + this.password + "," + this.phoneNumber + "," + this.address
-                + "," + this.paymentMethod;
-        System.out.println(s);
-        for (int i = 0; i < readersinfo.size(); i++) {
-            if (readersinfo.get(i).equals(s)) {
+    public void editInformation(boolean invalid)
+    {
+        InputManager inputManager = new InputManager();
+
+        if (!invalid)
+            OutputManager.clearTerminal();
+
+        OutputManager.printWithColor("Account Details\n", "94m");
+
+        System.out.println("[0] Email: " + email);
+        System.out.println("[1] Username: " + username);
+        System.out.println("[2] Password: " + password);
+        System.out.println("[3] Phone Number: " + phoneNumber);
+        System.out.println("[4] Address: " + address);
+        System.out.println("[5] Payment Method: " + paymentMethod);
+        
+        ArrayList<String> readersinfo = FileManager.readFile(Constants.READERS_FILE_PATH);
+        int index = -1;
+
+        for (int i = 0; i < readersinfo.size(); i++)
+        {
+            if (readersinfo.get(i).contains(email))
+            {
                 index = i;
-                f = true;
                 break;
             }
         }
-        if (f) {
-            char check = 'y';
-            while (check == 'y') {
-                System.out.println("which information you would like to edit:  ");
-                System.out.println(
-                        "1- user name        2- password     3- phone number     4- address      5- payment method");
-                choice = in.getIntInput();
-                switch (choice) {
+
+        if (index >= 0)
+        {
+            char check = 'Y';
+            while (check == 'Y')
+            {
+                OutputManager.printWithColor("\nWhich information would you like to edit? (1/2/3/4/5):", "94m");
+
+                switch (inputManager.getIntInput())
+                {
+                    case 0:
+                        OutputManager.clearTerminal();
+                        OutputManager.printWithColor("Email cannot be edited!", "31m");
+                        editInformation(true);
+                        return;
                     case 1:
-                        System.out.println("enter the new user name");
-                        this.username = in.getStringInput();
+                        System.out.println("Enter the new username: ");
+                        this.username = inputManager.getStringInput();
                         break;
                     case 2:
-                        System.out.println("enter the new password");
-                        this.password = in.getStringInput();
+                        System.out.println("Enter the new password: ");
+                        this.password = inputManager.getStringInput();
                         break;
                     case 3:
-                        System.out.println("enter the new phone number");
-                        this.phoneNumber = in.getStringInput();
+                        System.out.println("Enter the new phone number: ");
+                        this.phoneNumber = inputManager.getStringInput();
                         break;
                     case 4:
-                        System.out.println("enter the new address");
-                        this.address = in.getStringInput();
+                        System.out.println("Enter the new address: ");
+                        this.address = inputManager.getStringInput();
                         break;
                     case 5:
-                        System.out.println("enter the new payment method");
-                        this.paymentMethod = in.getStringInput();
+                        System.out.println("Enter the new payment method: ");
+                        this.paymentMethod = inputManager.getStringInput();
                 }
-                System.out.println("do you want to edit another information(y/n)");
-                check = in.getStringInput().charAt(0);
+                OutputManager.printWithColor("\nDo you want to edit another information? (Y/N):", "94m");
+                check = inputManager.getStringInput().charAt(0);
             }
-            s = this.email + "," + this.username + "," + this.password + "," + this.phoneNumber + "," + this.address
-                    + "," + this.paymentMethod;
-            readersinfo.set(index, s);
-            FileManager.writeFile(Constants.READERS_FILE_PATH, readersinfo);
-        } else {
-            System.out.println("user not found");
+
+            if (check == 'N')
+            {
+                readersinfo.set(index, email + "," + username + "," + password + "," + phoneNumber + "," + address +
+                                "," +
+                                paymentMethod);
+
+                FileManager.writeFile(Constants.READERS_FILE_PATH, readersinfo);
+            }
+            else
+            {
+                OutputManager.invalidChoice();
+                editInformation(true);
+            }
         }
-        System.out.println("your information have been apdated Successfully");
+        else
+        {
+            OutputManager.printWithColor("User not found!", "31m");
+        }
+
+        OutputManager.clearTerminal();
+        OutputManager.printWithColor("Your information has been successfully updated!\n", "32m");
+        Menu.showReaderFunctions(this);
+    }
+
+    public void orderBook(String bookName)
+    {
 
     }
 
-    public void orderBook(String bookName) {
-
-    }
-
-    public void register() {
-        FileManager.appendFile(Constants.READERS_FILE_PATH, username + "," + email + "," + password
-                + "," + phoneNumber + "," + address + "," + paymentMethod);
+    public void register()
+    {
+        FileManager.appendFile(Constants.READERS_FILE_PATH, username + "," + email + "," +
+                        password + "," + phoneNumber + "," + address + "," + paymentMethod);
     }
 
 }

@@ -1,2 +1,1 @@
-email,username,password,phoneNumber,address,paymentMethod
 adam@gmail.com,adam,adampass
