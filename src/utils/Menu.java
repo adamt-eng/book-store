@@ -98,7 +98,7 @@ public class Menu
                 admin.searchBook(admin, false);
                 break;
             case 3:
-                admin.displayBooks("admin");
+                admin.displayBooks(admin);
                 break;
             case 0:
                 admin = null;
@@ -128,7 +128,7 @@ public class Menu
                 reader.searchBook(reader, false);
                 break;
             case 3:
-                reader.displayBooks("reader");
+                reader.displayBooks(reader);
                 break;
             case 0:
                 reader = null;

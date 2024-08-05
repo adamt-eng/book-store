@@ -140,7 +140,7 @@ public abstract class User
                 switch (new InputManager().getIntInput())
                 {
                     case 1:
-                        reader.orderBook(bookName);
+                        // reader.orderBook();
                         break;
                     case 0:
                         OutputManager.clearTerminal();
@@ -156,8 +156,20 @@ public abstract class User
         }
     }
 
-    public void displayBooks(String accountType)
+    public void displayBooks(User user)
     {
+        Admin admin = null;
+        Reader reader = null;
+
+        if (user instanceof Admin)
+        {
+            admin = (Admin) user;
+        }
+        else
+        {
+            reader = (Reader) user;
+        }
+
         OutputManager.clearTerminal();
 
         String[] headers = { "Book Name", "Book Author", "Book Price", "Book Stock", "Book Category" };
@@ -170,14 +182,56 @@ public abstract class User
         // Iterate through the book array and print details
 
         ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-
         for (int i = 0; i < books.size(); i++)
         {
             String book = books.get(i);
 
-            if (accountType == "admin" || !book.contains(", 0,"))
+            if (admin != null || !book.contains(", 0,"))
             {
                 printRow(book.split(","), columnWidths);
+            }
+        }
+
+        InputManager inputManager = new InputManager();
+
+        OutputManager.printWithColor("Select book using it's index to show actions:", "94m");
+        int bookIndex = inputManager.getIntInput();
+        String bookName = books.get(bookIndex);
+
+        if (admin != null)
+        {
+            System.out.println("\n[1] Delete Book");
+            System.out.println("[2] Edit Book");
+            System.out.println("[0] Return To Previous Menu");
+
+            switch (inputManager.getIntInput())
+            {
+                case 1:
+                admin.deleteBook(bookName);
+                    break;
+                case 2:
+                admin.editBook(bookName);
+                    break;
+                case 0:
+                    Menu.showAdminFunctions(admin);
+                    break;
+            }
+        }
+        else
+        {
+
+            System.out.println("\n[1] Order Book");
+            System.out.println("[0] Return To Previous Menu");
+
+            switch (new InputManager().getIntInput())
+            {
+                case 1:
+                reader.orderBook(bookName);
+                    break;
+                case 0:
+                    OutputManager.clearTerminal();
+                    Menu.showReaderFunctions(reader);
+                    break;
             }
         }
     }
