@@ -19,8 +19,8 @@ public class Admin extends User implements AdminService, BookService
 
     public void addBook(Book book)
     {
-        FileManager.appendFile(Constants.BOOKS_FILE_PATH, book.getName() + ", " + book.getAuthor() + ", " + book.getPrice()
-        + ", " + book.getStock() + ", " + book.getPrice());
+        FileManager.appendFile(Constants.BOOKS_FILE_PATH, book.getName() + ", " + book.getAuthor() + ", $" + book.getPrice()
+        + ", " + book.getStock() + ", " + book.getCategory());
 
     }
 
