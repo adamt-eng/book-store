@@ -145,7 +145,7 @@ public class Reader extends User implements ReaderService
 
     public void register()
     {
-        FileManager.appendFile(Constants.READERS_FILE_PATH, username + "," + email + "," +
+        FileManager.appendFile(Constants.READERS_FILE_PATH, email + "," + username + "," +
                         password + "," + phoneNumber + "," + address + "," + paymentMethod);
     }
 
