@@ -144,8 +144,8 @@ public class Reader extends User implements ReaderService
             {
                 shoppingCart.add(new Book(bookDetails[0], bookDetails[1], Double.parseDouble(bookDetails[2]),
                                 Integer.parseInt(bookDetails[3]), bookDetails[4]));
+                break;
             }
-            break;
         }
 
         OutputPrinter.clearTerminal();
@@ -213,7 +213,7 @@ public class Reader extends User implements ReaderService
                 f1 = false;
             }
         }
-        
+
         ArrayList<String> bookData = FileManager.readFile(Constants.BOOKS_FILE_PATH);
         for (Book orderedBook : shoppingCart)
         {
@@ -230,7 +230,7 @@ public class Reader extends User implements ReaderService
                 }
             }
         }
-        
+
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
         shoppingCart.clear();
@@ -248,7 +248,7 @@ public class Reader extends User implements ReaderService
             }
         }
         shoppingCart.remove(i);
-    
+
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Book removed from cart successfully!\n", "32m");
         Menu.showReaderFunctions(this);

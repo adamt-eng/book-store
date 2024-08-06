@@ -199,7 +199,8 @@ public abstract class User implements BookService
             reader = (Reader) user;
         }
 
-        if (!invalid) OutputPrinter.clearTerminal();
+        if (!invalid)
+            OutputPrinter.clearTerminal();
 
         String[] headers = { "Book ID", "Book Name", "Book Author", "Book Price (USD)", "Book Stock", "Book Category" };
         int[] columnWidths = { 10, 40, 30, 20, 10, 30 };
@@ -221,12 +222,14 @@ public abstract class User implements BookService
         System.out.println("+");
 
         ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+        ArrayList<Integer> indices = new ArrayList<Integer>();
         for (int i = 0; i < books.size(); i++)
         {
             String book = i + "," + books.get(i);
 
             if (admin != null || !book.contains(",0,"))
             {
+                indices.add(i);
                 String[] bookDetails = book.split(",");
                 for (int j = 0; j < bookDetails.length; j++)
                 {
@@ -254,14 +257,21 @@ public abstract class User implements BookService
                 }
                 break;
             }
-            case 1:
-            {
+            case 1: {
                 OutputPrinter.printWithColor("\nSelect book using its index to show actions:", "94m");
-                showBookActions(admin, reader, books.get(InputReader.getIntInput()).split(",")[0]);
+                int choice = InputReader.getIntInput();
+                if (indices.contains(choice))
+                {
+                    showBookActions(admin, reader, books.get(choice).split(",")[0]);
+                }
+                else
+                {
+                    OutputPrinter.invalidChoice();
+                    displayBooks(user, true);
+                }
                 break;
             }
-            default:
-            {
+            default: {
                 OutputPrinter.invalidChoice();
                 displayBooks(user, true);
                 break;
