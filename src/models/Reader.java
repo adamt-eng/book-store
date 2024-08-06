@@ -154,10 +154,13 @@ public class Reader extends User implements ReaderService
         Book book = new Book(mybookdetails[0], mybookdetails[1], Double.parseDouble(mybookdetails[2]), Integer.parseInt(mybookdetails[3]),  mybookdetails[4]);
         shoppingCart.add(book);
 
-        OutputPrinter.printWithColor("Book added to your shopping cart!", "32m");
+        OutputPrinter.clearTerminal();
+        OutputPrinter.printWithColor("Book added to your shopping cart!\n", "32m");
         updatedfile.set(i, (mybookdetails[0] + "," + mybookdetails[1] + "," + mybookdetails[2] + "," + (Integer.parseInt(mybookdetails[3].trim()) - 1) + "," +
                         mybookdetails[4]));
         FileManager.writeFile(Constants.BOOKS_FILE_PATH, updatedfile);
+
+        Menu.showReaderFunctions(this);
     }
 
     public void showReceipt()
