@@ -14,7 +14,7 @@ public class Reader extends User implements ReaderService
     {
         return shoppingCart.size();
     }
-    
+
     public Reader(String username, String email, String password, String phoneNumber,
                     String address, String paymentMethod)
     {

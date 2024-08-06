@@ -2,10 +2,8 @@ package utils;
 
 import models.*;
 
-public class Menu
-{
-    public static void showMainMenu()
-    {
+public class Menu {
+    public static void showMainMenu() {
         System.out.println("[1] Admin");
         System.out.println("[2] Reader");
         System.out.println("[0] Exit");
@@ -63,8 +61,7 @@ public class Menu
         }
     }
 
-    public static void showAdminFunctions(Admin admin)
-    {
+    public static void showAdminFunctions(Admin admin) {
         System.out.println("[1] Add Book");
         System.out.println("[2] Search For A Book");
         System.out.println("[3] Display All Books");
@@ -93,8 +90,7 @@ public class Menu
         }
     }
 
-    public static void showReaderFunctions(Reader reader)
-    {
+    public static void showReaderFunctions(Reader reader) {
         System.out.println("[1] Edit Account Information");
         System.out.println("[2] Search For A Book");
         System.out.println("[3] Display All Books");
