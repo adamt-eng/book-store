@@ -141,11 +141,11 @@ public abstract class User implements BookService
 
                 String[] data = book.split(",");
 
-                double stock = Double.parseDouble(data[3]);
+                int stock = Integer.parseInt(data[3]);
 
                 if (stock == 0)
                 {
-                    OutputPrinter.printWithColor("Book is unavailable!", "31m");
+                    found = false;
                 }
                 else
                 {
@@ -180,7 +180,7 @@ public abstract class User implements BookService
         }
         else
         {
-            OutputPrinter.printWithColor("Book is unavailable!", "31m");
+            OutputPrinter.printWithColor("Book is unavailable!\n", "31m");
             user.searchBook(user, true);
         }
     }
