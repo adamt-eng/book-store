@@ -11,7 +11,7 @@ public class Menu
         System.out.println("[0] Exit");
         System.out.println("\nEnter your choice: ");
 
-        switch (new InputManager().getIntInput())
+        switch (InputReader.getIntInput())
         {
             case 1:
                 showAdminMenu(false);
@@ -20,62 +20,44 @@ public class Menu
                 showReaderMenu(false);
                 break;
             case 0:
-                OutputManager.exit();
+                OutputPrinter.exit();
                 break;
             default:
-                OutputManager.invalidChoice();
+                OutputPrinter.invalidChoice();
                 showMainMenu();
                 break;
         }
     }
 
-    public static void showAdminMenu(boolean invalid)
+    private static void showAdminMenu(boolean invalid)
     {
         if (!invalid)
-            OutputManager.clearTerminal();
-            
-            OutputManager.printWithColor("Admin\n", "96m");
+            OutputPrinter.clearTerminal();
+
+        OutputPrinter.printWithColor("Admin\n", "96m");
         System.out.println("[1] Login");
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
-        InputManager inputManager = new InputManager();
-
-        switch (inputManager.getIntInput())
+        switch (InputReader.getIntInput())
         {
             case 1: {
-                OutputManager.clearTerminal();
-                OutputManager.printWithColor("Login\n", "96m");
-
-                System.out.print("Username: ");
-                String username = inputManager.getStringInput();
-
-                System.out.print("Password: ");
-                String password = inputManager.getStringInput();
-
-                String loginResult = User.login(username, password, "admin");
-                if (loginResult != "N/A")
+                Admin admin = (Admin) User.login("admin");
+                if (admin != null)
                 {
-                    OutputManager.clearTerminal();
-                    OutputManager.printWithColor("Login successful!\n", "32m");
-
-                    Admin admin = new Admin(username, loginResult.split(",")[0], password);
-
                     showAdminFunctions(admin);
                 }
                 else
                 {
-                    OutputManager.clearTerminal();
-                    OutputManager.printWithColor("Incorrect username or password!\n", "31m");
                     showAdminMenu(true);
                 }
             }
                 break;
             case 0:
-                OutputManager.clearTerminal();
+                OutputPrinter.clearTerminal();
                 Menu.showMainMenu();
             default:
-                OutputManager.invalidChoice();
+                OutputPrinter.invalidChoice();
                 showAdminMenu(true);
                 break;
         }
@@ -89,24 +71,24 @@ public class Menu
         System.out.println("[0] Logout");
         System.out.println("\nEnter your choice: ");
 
-        switch (new InputManager().getIntInput())
+        switch (InputReader.getIntInput())
         {
             case 1:
-                // admin.addBook();
+                admin.addBook();
                 break;
             case 2:
                 admin.searchBook(admin, false);
                 break;
             case 3:
-                admin.displayBooks(admin);
+                admin.displayBooks(admin, false);
                 break;
             case 0:
                 admin = null;
-                OutputManager.clearTerminal();
+                OutputPrinter.clearTerminal();
                 Menu.showMainMenu();
                 break;
             default:
-                OutputManager.invalidChoice();
+                OutputPrinter.invalidChoice();
                 break;
         }
     }
@@ -116,10 +98,11 @@ public class Menu
         System.out.println("[1] Edit Account Information");
         System.out.println("[2] Search For A Book");
         System.out.println("[3] Display All Books");
+        System.out.println("[4] Show Receipt");
         System.out.println("[0] Logout");
         System.out.println("\nEnter your choice: ");
 
-        switch (new InputManager().getIntInput())
+        switch (InputReader.getIntInput())
         {
             case 1:
                 reader.editInformation(false);
@@ -127,16 +110,28 @@ public class Menu
             case 2:
                 reader.searchBook(reader, false);
                 break;
-            case 3:
-                reader.displayBooks(reader);
+                case 3:
+                reader.displayBooks(reader, false);
+                break;
+                case 4:
+                if (reader.getShoppingCartSize() > 0) 
+                {
+                    reader.showReceipt();
+                }
+                else 
+                {
+                    OutputPrinter.clearTerminal();
+                    OutputPrinter.printWithColor("Shopping cart is empty!\n", "96m");
+                    showReaderFunctions(reader);
+                }
                 break;
             case 0:
                 reader = null;
-                OutputManager.clearTerminal();
+                OutputPrinter.clearTerminal();
                 Menu.showMainMenu();
                 break;
             default:
-                OutputManager.invalidChoice();
+                OutputPrinter.invalidChoice();
                 showReaderFunctions(reader);
                 break;
         }
@@ -144,91 +139,38 @@ public class Menu
 
     public static void showReaderMenu(boolean invalid)
     {
-        InputManager inputManager = new InputManager();
-
         if (!invalid)
-            OutputManager.clearTerminal();
+            OutputPrinter.clearTerminal();
 
-            OutputManager.printWithColor("Reader\n", "96m");
-            System.out.println("[1] Login");
+        OutputPrinter.printWithColor("Reader\n", "96m");
+        System.out.println("[1] Login");
         System.out.println("[2] Register");
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
-        switch (inputManager.getIntInput())
+        switch (InputReader.getIntInput())
         {
-            case 1: {
-                OutputManager.clearTerminal();
-                OutputManager.printWithColor("Login\n", "96m");
-
-                System.out.print("Username: ");
-                String username = inputManager.getStringInput();
-
-                System.out.print("Password: ");
-                String password = inputManager.getStringInput();
-
-                String loginResult = User.login(username, password, "reader");
-                if (loginResult != "N/A")
+            case 1:
+                Reader reader = (Reader) User.login("reader");
+                if (reader != null)
                 {
-                    OutputManager.clearTerminal();
-                    OutputManager.printWithColor("Login successful!\n", "32m");
-
-                    String data[] = loginResult.split(",");
-                    String email = data[0];
-                    String phoneNumber = data[3];
-                    String address = data[4];
-                    String paymentMethod = data[5];
-
-                    Reader reader = new Reader(username, email, password, phoneNumber, address,
-                                    paymentMethod);
-
                     showReaderFunctions(reader);
-
                 }
                 else
                 {
-                    OutputManager.clearTerminal();
-                    OutputManager.printWithColor("Incorrect username or password!\n", "31m");
                     showReaderMenu(true);
                 }
                 break;
-            }
-            case 2: {
-                OutputManager.clearTerminal();
-                OutputManager.printWithColor("Register\n", "96m");
-
-                System.out.print("Username: ");
-                String username = inputManager.getStringInput();
-
-                System.out.print("Email: ");
-                String email = inputManager.getStringInput();
-
-                System.out.print("Password: ");
-                String password = inputManager.getStringInput();
-
-                System.out.print("Phone Number: ");
-                String phoneNumber = inputManager.getStringInput();
-
-                System.out.print("Address: ");
-                String address = inputManager.getStringInput();
-
-                System.out.print("Payment Method: ");
-                String paymentMethod = inputManager.getStringInput();
-
-                Reader reader = new Reader(username, email, password, phoneNumber, address,
-                                paymentMethod);
-                reader.register();
-
-                OutputManager.clearTerminal();
-                OutputManager.printWithColor("Registration successful!\n", "32m");
-            }
+            case 2:
+                Reader.register();
+                showReaderMenu(true);
                 break;
             case 0:
-                OutputManager.clearTerminal();
+                OutputPrinter.clearTerminal();
                 Menu.showMainMenu();
                 break;
             default:
-                OutputManager.invalidChoice();
+                OutputPrinter.invalidChoice();
                 showReaderMenu(true);
                 break;
         }

@@ -5,11 +5,6 @@ import java.util.*;
 
 public class FileManager
 {
-    public static boolean fileExists(String filePath)
-    {
-        return new File(filePath).exists();
-    }
-
     public static ArrayList<String> readFile(String filePath)
     {
         ArrayList<String> lines = new ArrayList<>();

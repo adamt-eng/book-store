@@ -1,9 +1,10 @@
 package models;
 
 import java.util.ArrayList;
+import services.BookService;
 import utils.*;
 
-public abstract class User
+public abstract class User implements BookService
 {
     protected String username, email, password;
 
@@ -44,27 +45,90 @@ public abstract class User
         this.password = password;
     }
 
-    public static String login(String username, String password, String accountType)
+    private void showBookActions(Admin admin, Reader reader, String bookName)
     {
+        if (admin != null)
+        {
+            System.out.println("\n[1] Delete Book");
+            System.out.println("[2] Edit Book");
+            System.out.println("[0] Return To Previous Menu");
+
+            switch (InputReader.getIntInput())
+            {
+                case 1:
+                    admin.deleteBook(bookName);
+                    break;
+                case 2:
+                    admin.editBook(bookName);
+                    break;
+                case 0:
+                    OutputPrinter.clearTerminal();
+                    Menu.showAdminFunctions(admin);
+                    break;
+            }
+        }
+        else
+        {
+            System.out.println("\n[1] Order Book");
+            System.out.println("[0] Return To Previous Menu");
+
+            switch (InputReader.getIntInput())
+            {
+                case 1:
+                    reader.orderBook(bookName);
+                    break;
+                case 0:
+                    OutputPrinter.clearTerminal();
+                    Menu.showReaderFunctions(reader);
+                    break;
+            }
+        }
+    }
+
+    public static User login(String accountType)
+    {
+        OutputPrinter.clearTerminal();
+        OutputPrinter.printWithColor("Login\n", "96m");
+
+        System.out.print("Username: ");
+        String username = InputReader.getStringInput();
+
+        System.out.print("Password: ");
+        String password = InputReader.getStringInput();
+
         for (String user : FileManager.readFile(accountType == "admin" ? Constants.ADMINS_FILE_PATH
                         : Constants.READERS_FILE_PATH))
         {
+            System.out.print(username + "," + password);
             if (user.contains(username + "," + password))
             {
-                return user;
+                OutputPrinter.clearTerminal();
+                OutputPrinter.printWithColor("Login successful!\n", "32m");
+
+                if (accountType == "admin")
+                {
+                    return new Admin(username, username, password);
+                }
+                else
+                {
+                    return new Reader(username, password, password, accountType, username, password);
+                }
             }
         }
 
-        return "N/A";
+        OutputPrinter.clearTerminal();
+        OutputPrinter.printWithColor("Incorrect username or password!\n", "31m");
+
+        return null;
     }
 
     public void searchBook(User user, boolean invalid)
     {
         if (!invalid)
-            OutputManager.clearTerminal();
-        OutputManager.printWithColor("Search for book using it's name:", "94m");
+            OutputPrinter.clearTerminal();
+        OutputPrinter.printWithColor("Search for book using it's name:", "94m");
 
-        var bookName = new InputManager().getStringInput();
+        var bookName = InputReader.getStringInput();
 
         boolean found = false;
         for (String book : FileManager.readFile(Constants.BOOKS_FILE_PATH))
@@ -73,7 +137,7 @@ public abstract class User
             {
                 found = true;
 
-                OutputManager.clearTerminal();
+                OutputPrinter.clearTerminal();
 
                 String[] data = book.split(",");
 
@@ -81,11 +145,11 @@ public abstract class User
 
                 if (stock == 0)
                 {
-                    OutputManager.printWithColor("Book is unavailable!", "31m");
+                    OutputPrinter.printWithColor("Book is unavailable!", "31m");
                 }
                 else
                 {
-                    OutputManager.printWithColor("Book Details\n", "94m");
+                    OutputPrinter.printWithColor("Book Details\n", "94m");
 
                     System.out.println("Name: " + data[0]);
                     System.out.println("Author: " + data[1]);
@@ -112,51 +176,16 @@ public abstract class User
 
         if (found)
         {
-            if (admin != null)
-            {
-                System.out.println("\n[1] Delete Book");
-                System.out.println("[2] Edit Book");
-                System.out.println("[0] Return To Previous Menu");
-
-                switch (new InputManager().getIntInput())
-                {
-                    case 1:
-                        admin.deleteBook(bookName);
-                        break;
-                    case 2:
-                        admin.editBook(bookName);
-                        break;
-                    case 0:
-                        Menu.showAdminFunctions(admin);
-                        break;
-                }
-            }
-            else
-            {
-
-                System.out.println("\n[1] Order Book");
-                System.out.println("[0] Return To Previous Menu");
-
-                switch (new InputManager().getIntInput())
-                {
-                    case 1:
-                        // reader.orderBook();
-                        break;
-                    case 0:
-                        OutputManager.clearTerminal();
-                        Menu.showReaderFunctions(reader);
-                        break;
-                }
-            }
+            showBookActions(admin, reader, bookName);
         }
         else
         {
-            OutputManager.printWithColor("Book is unavailable!", "31m");
+            OutputPrinter.printWithColor("Book is unavailable!", "31m");
             user.searchBook(user, true);
         }
     }
 
-    public void displayBooks(User user)
+    public void displayBooks(User user, boolean invalid)
     {
         Admin admin = null;
         Reader reader = null;
@@ -170,91 +199,73 @@ public abstract class User
             reader = (Reader) user;
         }
 
-        OutputManager.clearTerminal();
+        if (!invalid) OutputPrinter.clearTerminal();
 
-        String[] headers = { "Book Name", "Book Author", "Book Price", "Book Stock", "Book Category" };
-        int[] columnWidths = { 50, 20, 10, 10, 15 };
+        String[] headers = { "Book ID", "Book Name", "Book Author", "Book Price (USD)", "Book Stock", "Book Category" };
+        int[] columnWidths = { 10, 40, 30, 20, 10, 30 };
 
-        // Print the table header
-        printRow(headers, columnWidths);
-        printSeparator(columnWidths);
-
-        // Iterate through the book array and print details
-
-        ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        for (int i = 0; i < books.size(); i++)
+        for (int i = 0; i < headers.length; i++)
         {
-            String book = books.get(i);
-
-            if (admin != null || !book.contains(", 0,"))
-            {
-                printRow(book.split(","), columnWidths);
-            }
-        }
-
-        InputManager inputManager = new InputManager();
-
-        OutputManager.printWithColor("Select book using it's index to show actions:", "94m");
-        int bookIndex = inputManager.getIntInput();
-        String bookName = books.get(bookIndex);
-
-        if (admin != null)
-        {
-            System.out.println("\n[1] Delete Book");
-            System.out.println("[2] Edit Book");
-            System.out.println("[0] Return To Previous Menu");
-
-            switch (inputManager.getIntInput())
-            {
-                case 1:
-                admin.deleteBook(bookName);
-                    break;
-                case 2:
-                admin.editBook(bookName);
-                    break;
-                case 0:
-                    Menu.showAdminFunctions(admin);
-                    break;
-            }
-        }
-        else
-        {
-
-            System.out.println("\n[1] Order Book");
-            System.out.println("[0] Return To Previous Menu");
-
-            switch (new InputManager().getIntInput())
-            {
-                case 1:
-                reader.orderBook(bookName);
-                    break;
-                case 0:
-                    OutputManager.clearTerminal();
-                    Menu.showReaderFunctions(reader);
-                    break;
-            }
-        }
-    }
-
-    private static void printRow(String[] row, int[] columnWidths)
-    {
-        for (int i = 0; i < row.length; i++)
-        {
-            System.out.printf("| %-" + columnWidths[i] + "s ", row[i]);
+            System.out.printf("| %-" + columnWidths[i] + "s ", headers[i]);
         }
         System.out.println("|");
-    }
 
-    private static void printSeparator(int[] columnWidths)
-    {
         for (int width : columnWidths)
         {
             System.out.print("+");
             for (int i = 0; i < width + 2; i++)
-            { // +2 for padding
+            {
                 System.out.print("-");
             }
         }
         System.out.println("+");
+
+        ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+        for (int i = 0; i < books.size(); i++)
+        {
+            String book = i + "," + books.get(i);
+
+            if (admin != null || !book.contains(",0,"))
+            {
+                String[] bookDetails = book.split(",");
+                for (int j = 0; j < bookDetails.length; j++)
+                {
+                    System.out.printf("| %-" + columnWidths[j] + "s ", bookDetails[j]);
+                }
+                System.out.println("|");
+            }
+        }
+
+        System.out.println("\n[0] Return to previous menu");
+        System.out.println("[1] Show Book Actions");
+        System.out.println("\nEnter your choice: ");
+
+        switch (InputReader.getIntInput())
+        {
+            case 0: {
+                OutputPrinter.clearTerminal();
+                if (admin != null)
+                {
+                    Menu.showAdminFunctions(admin);
+                }
+                else
+                {
+                    Menu.showReaderFunctions(reader);
+                }
+                break;
+            }
+            case 1:
+            {
+                OutputPrinter.printWithColor("\nSelect book using its index to show actions:", "94m");
+                showBookActions(admin, reader, books.get(InputReader.getIntInput()));
+                break;
+            }
+            default:
+            {
+                OutputPrinter.invalidChoice();
+                displayBooks(user, true);
+                break;
+            }
+        }
     }
 }

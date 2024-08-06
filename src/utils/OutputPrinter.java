@@ -1,10 +1,9 @@
 package utils;
 
-public class OutputManager 
+public class OutputPrinter 
 {
     public static void clearTerminal()
     {
-        // Works on Windows, Linux, MacOS, does not work on IDE terminal I think.
         System.out.print("\033\143");
     }
     public static void printWithColor(String text, String colorCode)
