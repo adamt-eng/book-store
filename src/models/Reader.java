@@ -137,28 +137,16 @@ public class Reader extends User implements ReaderService
 
     public void orderBook(String bookName)
     {
-        ArrayList<String> updatedfile = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        int i;
-
-        for (i = 0; i < updatedfile.size(); i++)
+        for (String book : FileManager.readFile(Constants.BOOKS_FILE_PATH))
         {
-            if (updatedfile.get(i).contains(bookName))
+            String[] bookDetails = book.split(",");
+            if (bookDetails[0].contains(bookName))
             {
-                break;
+                shoppingCart.add(new Book(bookDetails[0], bookDetails[1], Double.parseDouble(bookDetails[2]),
+                                Integer.parseInt(bookDetails[3]), bookDetails[4]));
             }
+            break;
         }
-
-        String[] mybookdetails = updatedfile.get(i).split(",");
-
-        shoppingCart.add(new Book(mybookdetails[0], mybookdetails[1], Double.parseDouble(mybookdetails[2]),
-                        Integer.parseInt(mybookdetails[3]), mybookdetails[4]));
-
-        updatedfile.set(i,
-                        (mybookdetails[0] + "," + mybookdetails[1] + "," + mybookdetails[2] + "," + (Integer.parseInt(
-                                        mybookdetails[3].trim()) - 1) + "," +
-                                        mybookdetails[4]));
-                                        
-        FileManager.writeFile(Constants.BOOKS_FILE_PATH, updatedfile);
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Book added to your shopping cart!\n", "32m");
@@ -210,7 +198,7 @@ public class Reader extends User implements ReaderService
 
         while (f1)
         {
-            System.out.println("This is your current payment method: " + this.paymentMethod);
+            System.out.println("\nThis is your current payment method: " + this.paymentMethod);
             OutputPrinter.printWithColor("Do you want to change it? (Y/N):", "94m");
 
             choice = InputReader.getStringInput().charAt(0);
@@ -225,7 +213,24 @@ public class Reader extends User implements ReaderService
                 f1 = false;
             }
         }
+        
+        ArrayList<String> bookData = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+        for (Book orderedBook : shoppingCart)
+        {
+            for (int i = 0; i < bookData.size(); i++)
+            {
+                String[] bookDetails = bookData.get(i).split(",");
 
+                if (bookDetails[0].trim().equals(orderedBook.getName().trim()))
+                {
+                    bookDetails[3] = String.valueOf(Integer.parseInt(bookDetails[3]) - 1);
+                    bookData.set(i, String.join(",", bookDetails));
+                    FileManager.writeFile(Constants.BOOKS_FILE_PATH, bookData);
+                    break;
+                }
+            }
+        }
+        
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
         shoppingCart.clear();
@@ -234,31 +239,16 @@ public class Reader extends User implements ReaderService
 
     public void removeFromCart(Book bookToRemove)
     {
-        ArrayList<String> allbooks = FileManager.readFile(Constants.BOOKS_FILE_PATH);
         int i;
-
-        for (i = 0; i < allbooks.size(); i++)
+        for (i = 0; i < shoppingCart.size(); i++)
         {
-            if (allbooks.get(i).contains(bookToRemove.getName()))
+            if (shoppingCart.get(i) == bookToRemove)
             {
-                allbooks.remove(i);
-                bookToRemove.setStock(bookToRemove.getStock() + 1);
                 break;
             }
         }
-
-        allbooks.set(i, bookToRemove.getName() + "," + bookToRemove.getAuthor() + "," + bookToRemove.getPrice() + "," +
-                        bookToRemove.getStock() + "," + bookToRemove.getCategory());
-        FileManager.writeFile(Constants.BOOKS_FILE_PATH, allbooks);
-        
-        for (Book book : shoppingCart)
-        {
-            if (book == bookToRemove)
-            {
-                shoppingCart.remove(bookToRemove);
-            }
-        }
-
+        shoppingCart.remove(i);
+    
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Book removed from cart successfully!\n", "32m");
         Menu.showReaderFunctions(this);

@@ -99,19 +99,19 @@ public abstract class User implements BookService
         for (String user : FileManager.readFile(accountType == "admin" ? Constants.ADMINS_FILE_PATH
                         : Constants.READERS_FILE_PATH))
         {
-            System.out.print(username + "," + password);
-            if (user.contains(username + "," + password))
+            String[] userData = user.split(",");
+            if (userData[1].equals(username) && userData[2].equals(password))
             {
                 OutputPrinter.clearTerminal();
                 OutputPrinter.printWithColor("Login successful!\n", "32m");
 
                 if (accountType == "admin")
                 {
-                    return new Admin(username, username, password);
+                    return new Admin(userData[1], userData[0], userData[2]);
                 }
                 else
                 {
-                    return new Reader(username, password, password, accountType, username, password);
+                    return new Reader(userData[1], userData[0], userData[2], userData[3], userData[4], userData[5]);
                 }
             }
         }
@@ -257,7 +257,7 @@ public abstract class User implements BookService
             case 1:
             {
                 OutputPrinter.printWithColor("\nSelect book using its index to show actions:", "94m");
-                showBookActions(admin, reader, books.get(InputReader.getIntInput()));
+                showBookActions(admin, reader, books.get(InputReader.getIntInput()).split(",")[0]);
                 break;
             }
             default:
