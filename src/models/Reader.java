@@ -205,6 +205,21 @@ public class Reader extends User implements ReaderService {
     }
 
     public void removeFromCart(Book bookToRemove) {
+        ArrayList<String> allbooks = new ArrayList<>();
+        allbooks = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+        int i;
+        for (i = 0; i < allbooks.size(); i++) {
+            if (allbooks.get(i).contains(bookToRemove.getName()))
+                ;
+            {
+                allbooks.remove(i);
+                bookToRemove.setStock(bookToRemove.getStock() - 1);
+                break;
+            }
+        }
+        allbooks.set(i, bookToRemove.getName() + "," + bookToRemove.getAuthor() + "," + bookToRemove.getPrice() + ","
+                + bookToRemove.getStock() + "," + bookToRemove.getCategory());
+
         for (Book book : shoppingCart) {
             if (book == bookToRemove) {
                 shoppingCart.remove(bookToRemove);
