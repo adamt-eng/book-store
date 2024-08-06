@@ -219,7 +219,7 @@ public class Reader extends User implements ReaderService {
         }
         allbooks.set(i, bookToRemove.getName() + "," + bookToRemove.getAuthor() + "," + bookToRemove.getPrice() + ","
                 + bookToRemove.getStock() + "," + bookToRemove.getCategory());
-
+        FileManager.writeFile(Constants.BOOKS_FILE_PATH, allbooks);
         for (Book book : shoppingCart) {
             if (book == bookToRemove) {
                 shoppingCart.remove(bookToRemove);
