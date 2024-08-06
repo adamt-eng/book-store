@@ -45,18 +45,17 @@ public class Admin extends User implements AdminService
         OutputPrinter.clearTerminal();
         
         ArrayList<String> booksinfo = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        
-        int index = -1;
-        for (int i = 0; i < booksinfo.size(); i++)
+        int i;
+
+        for (i = 0; i < booksinfo.size(); i++)
         {
             if (booksinfo.get(i).contains(bookName))
             {
-                index = i;
                 break;
             }
         }
 
-        String[] tokens = booksinfo.get(index).split(", ");
+        String[] tokens = booksinfo.get(i).split(", ");
 
         OutputPrinter.printWithColor("Book Details\n", "94m");
 
@@ -90,8 +89,8 @@ public class Admin extends User implements AdminService
                 System.out.println("Enter the new category: ");
                 tokens[4] = InputReader.getStringInput();
         }
-        booksinfo.remove(index);
-        booksinfo.add(index, tokens[0] + "," + tokens[1] + "," + tokens[2] + "," + tokens[3] + "," + tokens[4]);
+        booksinfo.remove(i);
+        booksinfo.add(i, tokens[0] + "," + tokens[1] + "," + tokens[2] + "," + tokens[3] + "," + tokens[4]);
 
         FileManager.writeFile(Constants.BOOKS_FILE_PATH, booksinfo);
 
