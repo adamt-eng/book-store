@@ -209,9 +209,7 @@ public class Reader extends User implements ReaderService {
         allbooks = FileManager.readFile(Constants.BOOKS_FILE_PATH);
         int i;
         for (i = 0; i < allbooks.size(); i++) {
-            if (allbooks.get(i).contains(bookToRemove.getName()))
-                ;
-            {
+            if (allbooks.get(i).contains(bookToRemove.getName())) {
                 allbooks.remove(i);
                 bookToRemove.setStock(bookToRemove.getStock() + 1);
                 break;
