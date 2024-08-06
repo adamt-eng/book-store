@@ -1,3 +1,4 @@
 email,username,password,phoneNumber,address,paymentMethod
 adam@gmail.com,adam,adampass,01093,ada,ada
 mohamed@gmail.com,mohamed,1234,011295,gold street,fawry
+mohamed@gmail,mohamed,12345,011295,elzawya,fawry

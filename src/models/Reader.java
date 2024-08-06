@@ -138,7 +138,7 @@ public class Reader extends User implements ReaderService {
         apdatedfile.set(i, (mybookdetails[0] + "," + mybookdetails[1] + "," + mybookdetails[2] + "," + bookstock + ","
                 + mybookdetails[4]));
         FileManager.writeFile(Constants.BOOKS_FILE_PATH, apdatedfile);
-        Menu.showReaderFunctions(null);
+        Menu.showReaderFunctions(this);
     }
 
     public void showreceipt() {
@@ -188,7 +188,36 @@ public class Reader extends User implements ReaderService {
             }
         }
         OutputManager.printWithColor("books have been purchased successfully", "32m");
-        Menu.showReaderFunctions(null);
+        Menu.showReaderFunctions(this);
+    }
+    public void removefromShoppingbag(String bookname) 
+    {
+        ArrayList<String> apdatedfile = new ArrayList<>();
+        apdatedfile = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+        String[] mybookdetails = new String[5];
+        int bookstock;
+        int j;
+        for(int i=0;i<readerbooks.size();i++)
+        {
+            if (readerbooks.get(i).contains(bookname)) 
+            {
+                readerbooks.remove(i);
+                break;
+            }
+        }
+        for (j = 0; j < FileManager.readFile(Constants.BOOKS_FILE_PATH).size(); j++) {
+            if (FileManager.readFile(Constants.BOOKS_FILE_PATH).get(j).contains(bookname)) {
+                break;
+            }
+        }
+        OutputManager.printWithColor("book removed to your Shopping Cart", "32m");
+        mybookdetails = FileManager.readFile(Constants.BOOKS_FILE_PATH).get(j).split(",");
+        bookstock = Integer.parseInt(mybookdetails[3].trim());
+        bookstock += 1;
+        apdatedfile.set(j, (mybookdetails[0] + "," + mybookdetails[1] + "," + mybookdetails[2] + "," + bookstock + ","
+        + mybookdetails[4]));
+        FileManager.writeFile(Constants.BOOKS_FILE_PATH, apdatedfile);
+        Menu.showReaderFunctions(this);
     }
 
     public void register() {

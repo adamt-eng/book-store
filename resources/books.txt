@@ -1,4 +1,4 @@
-The Great Gatsby, F. Scott Fitzgerald, $10.99, 35, Classic Literature
+The Great Gatsby, F. Scott Fitzgerald, 10.99,34, Classic Literature
 To Kill a Mockingbird, Harper Lee, 7.99,24, Fiction
 1984, George Orwell, $8.99, 0, Dystopian
 Harry Potter and the Sorcerer's Stone, J.K. Rowling, $12.99, 45, Fantasy
