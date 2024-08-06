@@ -228,6 +228,7 @@ public class Reader extends User implements ReaderService
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
+        shoppingCart.clear();
         Menu.showReaderFunctions(this);
     }
 
