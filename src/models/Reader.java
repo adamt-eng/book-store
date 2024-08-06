@@ -213,7 +213,7 @@ public class Reader extends User implements ReaderService {
                 ;
             {
                 allbooks.remove(i);
-                bookToRemove.setStock(bookToRemove.getStock() - 1);
+                bookToRemove.setStock(bookToRemove.getStock() + 1);
                 break;
             }
         }
