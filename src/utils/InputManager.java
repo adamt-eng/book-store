@@ -35,7 +35,7 @@ public class InputManager
         return -1;
     }
 
-    public String getStringInput()
+    public  String getStringInput()
     {
         return scanner.next();
     }
