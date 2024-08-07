@@ -1,6 +1,8 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import utils.*;
 
 public class Order
 {
@@ -55,5 +57,51 @@ public class Order
     public void setTotal(double total)
     {
         this.total = total;
+    }
+
+    public void generateOrder(ArrayList<Book> books)
+    {
+        boolean f1 = true;
+        while (f1)
+        {
+            System.out.println("\nThis is your current payment method: " + reader.getPaymentMethod());
+            OutputPrinter.printWithColor("Do you want to change it? (Y/N):", "94m");
+
+            char choice = InputReader.getStringInput().charAt(0);
+
+            if (choice == 'y' || choice == 'Y')
+            {
+                System.out.println("Enter the new payment method: ");
+                reader.setPaymentMethod(InputReader.getStringInput());
+            }
+            else if (choice == 'n' || choice == 'N')
+            {
+                f1 = false;
+            }
+        }
+
+        ArrayList<String> bookData = FileManager.readFile(Constants.BOOKS_FILE_PATH);
+        for (Book book : books)
+        {
+            for (int i = 0; i < bookData.size(); i++)
+            {
+                String[] bookDetails = bookData.get(i).split(",");
+
+                if (bookDetails[0].trim().equals(book.getName().trim()))
+                {
+                    bookDetails[3] = String.valueOf(Integer.parseInt(bookDetails[3]) - 1);
+                    bookData.set(i, String.join(",", bookDetails));
+                    FileManager.writeFile(Constants.BOOKS_FILE_PATH, bookData);
+                    break;
+                }
+            }
+        }
+
+        FileManager.appendFile(Constants.ORDERS_FILE_PATH, this.orderID + "," + this.dateCreated + "," +
+                        this.reader.getEmail() + "," + this.total);
+
+        OutputPrinter.clearTerminal();
+        OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
+        books.clear();
     }
 }

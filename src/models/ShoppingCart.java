@@ -22,15 +22,13 @@ public class ShoppingCart
         return addedBooks.isEmpty();
     }
 
-    public void addToCart(String bookName)
+    public void addToCart(Book book)
     {
-        for (String book : FileManager.readFile(Constants.BOOKS_FILE_PATH))
+        for (String line : FileManager.readFile(Constants.BOOKS_FILE_PATH))
         {
-            String[] bookDetails = book.split(",");
-            if (bookDetails[0].contains(bookName))
+            if (line.split(",")[0].equals(book.getName()))
             {
-                addedBooks.add(new Book(bookDetails[0], bookDetails[1], Double.parseDouble(bookDetails[2]),
-                                Integer.parseInt(bookDetails[3]), bookDetails[4]));
+                addedBooks.add(book);
                 break;
             }
         }
@@ -40,6 +38,23 @@ public class ShoppingCart
         Menu.showReaderFunctions(reader);
     }
 
+    public void removeFromCart(Book bookToRemove)
+    {
+        int i;
+        for (i = 0; i < addedBooks.size(); i++)
+        {
+            if (addedBooks.get(i) == bookToRemove)
+            {
+                break;
+            }
+        }
+        addedBooks.remove(i);
+
+        OutputPrinter.clearTerminal();
+        OutputPrinter.printWithColor("Book removed from cart successfully!\n", "32m");
+        Menu.showReaderFunctions(reader);
+    }
+    
     public void displayCart()
     {
         double total = 0;
@@ -73,7 +88,6 @@ public class ShoppingCart
         System.out.printf("| %-127s | $%-10.2f|%n", "Total Payment", total); // Format total payment to 2 decimal places
         System.out.println(
                         "------------------------------------------------------------------------------------------------------------------------------------------------");
-        boolean f1 = true;
 
         System.out.println("Do you want to remove any book from your cart? (Y/N): ");
         char choice = InputReader.getStringInput().charAt(0);
@@ -83,65 +97,9 @@ public class ShoppingCart
             removeFromCart(addedBooks.get(InputReader.getIntInput()));
         }
 
-        while (f1)
-        {
-            System.out.println("\nThis is your current payment method: " + reader.getPaymentMethod());
-            OutputPrinter.printWithColor("Do you want to change it? (Y/N):", "94m");
-
-            choice = InputReader.getStringInput().charAt(0);
-
-            if (choice == 'y' || choice == 'Y')
-            {
-                System.out.println("Enter the new payment method: ");
-                reader.setPaymentMethod(InputReader.getStringInput());
-            }
-            else if (choice == 'n' || choice == 'N')
-            {
-                f1 = false;
-            }
-        }
-
-        ArrayList<String> bookData = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        for (Book book : addedBooks)
-        {
-            for (int i = 0; i < bookData.size(); i++)
-            {
-                String[] bookDetails = bookData.get(i).split(",");
-
-                if (bookDetails[0].trim().equals(book.getName().trim()))
-                {
-                    bookDetails[3] = String.valueOf(Integer.parseInt(bookDetails[3]) - 1);
-                    bookData.set(i, String.join(",", bookDetails));
-                    FileManager.writeFile(Constants.BOOKS_FILE_PATH, bookData);
-                    break;
-                }
-            }
-        }
-
         Order order = new Order(Math.abs(new Random().nextInt()), new Date(), reader, total);
-        FileManager.appendFile(Constants.ORDERS_FILE_PATH, order.getOrderID() + "," + order.getDateCreated() + "," +
-                        order.getReader().getEmail() + "," + order.getTotal());
-
-        OutputPrinter.clearTerminal();
-        OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
-        addedBooks.clear();
-        Menu.showReaderFunctions(reader);
-    }
-
-    public void removeFromCart(Book bookToRemove)
-    {
-        int i;
-        for (i = 0; i < addedBooks.size(); i++)
-        {
-            if (addedBooks.get(i) == bookToRemove)
-            {
-                break;
-            }
-        }
-        addedBooks.remove(i);
-
-        OutputPrinter.clearTerminal();
-        OutputPrinter.printWithColor("Book removed from cart successfully!\n", "32m");
+        order.generateOrder(addedBooks);
+        
         Menu.showReaderFunctions(reader);
     }
 }

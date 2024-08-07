@@ -80,10 +80,10 @@ public class Book
             switch (InputReader.getIntInput())
             {
                 case 1:
-                    admin.deleteBook(this.name);
+                    admin.deleteBook(this);
                     break;
                 case 2:
-                    admin.editBook(this.name);
+                    admin.editBook(this);
                     break;
                 case 0:
                     OutputPrinter.clearTerminal();
@@ -99,7 +99,7 @@ public class Book
             switch (InputReader.getIntInput())
             {
                 case 1:
-                    reader.getShoppingCart().addToCart(this.name);
+                    reader.getShoppingCart().addToCart(this);
                     break;
                 case 0:
                     OutputPrinter.clearTerminal();

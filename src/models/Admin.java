@@ -48,7 +48,7 @@ public class Admin extends User implements AdminService
         Menu.showAdminFunctions(this);
     }
 
-    public void editBook(String bookName)
+    public void editBook(Book book)
     {
         OutputPrinter.clearTerminal();
 
@@ -57,7 +57,7 @@ public class Admin extends User implements AdminService
 
         for (i = 0; i < booksinfo.size(); i++)
         {
-            if (booksinfo.get(i).contains(bookName))
+            if (booksinfo.get(i).contains(book.getName()))
             {
                 break;
             }
@@ -108,13 +108,13 @@ public class Admin extends User implements AdminService
         Menu.showAdminFunctions(this);
     }
 
-    public void deleteBook(String bookName)
+    public void deleteBook(Book book)
     {
         ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
 
         for (int i = 0; i < books.size(); i++)
         {
-            if (books.get(i).contains(bookName))
+            if (books.get(i).contains(book.getName()))
             {
                 books.remove(i);
                 break;
@@ -125,7 +125,6 @@ public class Admin extends User implements AdminService
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Book successfully deleted!\n", "32m");
-
         Menu.showAdminFunctions(this);
     }
 }

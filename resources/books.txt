@@ -1,4 +1,4 @@
-The Great Gatsby,F. Scott Fitzgerald,10.99,27,Classic Literature
+The Great Gatsby,F. Scott Fitzgerald,10.99,26,Classic Literature
 1984,George Orwell,8.99,0,Dystopian
 Harry Potter and the Sorcerer's Stone,J.K. Rowling,14.99,40,Fantasy
 The Catcher in the Rye,J.D. Salinger,9.99,27,Coming-of-Age

@@ -3,6 +3,6 @@ package services;
 public interface AdminService
 {
     public void addBook();
-    public void editBook(String bookName);
-    public void deleteBook(String bookName);
+    public void editBook(Book book);
+    public void deleteBook(Book book);
 }
