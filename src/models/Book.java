@@ -1,5 +1,7 @@
 package models;
 
+import utils.*;
+
 public class Book
 {
     private String name;
@@ -10,11 +12,11 @@ public class Book
 
     public Book(String name, String author, double price, int stock, String category)
     {
-        setName(name);
-        setAuthor(author);
-        setPrice(price);
-        setStock(stock);
-        setCategory(category);
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.stock = stock;
+        this.category = category;
     }
 
     public String getName()
@@ -65,5 +67,45 @@ public class Book
     public void setCategory(String category)
     {
         this.category = category;
+    }
+
+    public void showBookActions(User user)
+    {
+        if (user instanceof Admin admin)
+        {
+            System.out.println("\n[1] Delete Book");
+            System.out.println("[2] Edit Book");
+            System.out.println("[0] Return To Previous Menu");
+
+            switch (InputReader.getIntInput())
+            {
+                case 1:
+                    admin.deleteBook(this.name);
+                    break;
+                case 2:
+                    admin.editBook(this.name);
+                    break;
+                case 0:
+                    OutputPrinter.clearTerminal();
+                    Menu.showAdminFunctions(admin);
+                    break;
+            }
+        }
+        else if (user instanceof Reader reader)
+        {
+            System.out.println("\n[1] Order Book");
+            System.out.println("[0] Return To Previous Menu");
+
+            switch (InputReader.getIntInput())
+            {
+                case 1:
+                    reader.getShoppingCart().addToCart(this.name);
+                    break;
+                case 0:
+                    OutputPrinter.clearTerminal();
+                    Menu.showReaderFunctions(reader);
+                    break;
+            }
+        }
     }
 }

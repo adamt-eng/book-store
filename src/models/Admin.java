@@ -23,11 +23,19 @@ public class Admin extends User implements AdminService
         System.out.print("Author: ");
         String author = InputReader.getStringInput();
 
-        System.out.print("Price: ");
-        String price = InputReader.getStringInput();
+        double price = -1;
+        while (price == -1)
+        {
+            System.out.print("Price: ");
+            price = InputReader.getDoubleInput();
+        }
 
-        System.out.print("Stock: ");
-        int stock = InputReader.getIntInput();
+        double stock = -1;
+        while (stock == -1)
+        {
+            System.out.print("Stock: ");
+            stock = InputReader.getIntInput();
+        }
 
         System.out.print("Category: ");
         String category = InputReader.getStringInput();
@@ -43,7 +51,7 @@ public class Admin extends User implements AdminService
     public void editBook(String bookName)
     {
         OutputPrinter.clearTerminal();
-        
+
         ArrayList<String> booksinfo = FileManager.readFile(Constants.BOOKS_FILE_PATH);
         int i;
 

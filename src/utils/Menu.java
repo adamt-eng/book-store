@@ -2,14 +2,17 @@ package utils;
 
 import models.*;
 
-public class Menu {
-    public static void showMainMenu() {
+public class Menu
+{
+    public static void showMainMenu()
+    {
         System.out.println("[1] Admin");
         System.out.println("[2] Reader");
         System.out.println("[0] Exit");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput()) {
+        switch (InputReader.getIntInput())
+        {
             case 1:
                 showAdminMenu(false);
                 break;
@@ -26,7 +29,8 @@ public class Menu {
         }
     }
 
-    private static void showAdminMenu(boolean invalid) {
+    private static void showAdminMenu(boolean invalid)
+    {
         if (!invalid)
             OutputPrinter.clearTerminal();
 
@@ -35,12 +39,16 @@ public class Menu {
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput()) {
+        switch (InputReader.getIntInput())
+        {
             case 1: {
                 Admin admin = (Admin) User.login("admin");
-                if (admin != null) {
+                if (admin != null)
+                {
                     showAdminFunctions(admin);
-                } else {
+                }
+                else
+                {
                     showAdminMenu(true);
                 }
             }
@@ -55,22 +63,24 @@ public class Menu {
         }
     }
 
-    public static void showAdminFunctions(Admin admin) {
+    public static void showAdminFunctions(Admin admin)
+    {
         System.out.println("[1] Add Book");
         System.out.println("[2] Search For A Book");
         System.out.println("[3] Display All Books");
         System.out.println("[0] Logout");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput()) {
+        switch (InputReader.getIntInput())
+        {
             case 1:
                 admin.addBook();
                 break;
             case 2:
-                admin.searchBook(admin, false);
+                admin.searchBook(false);
                 break;
             case 3:
-                admin.displayBooks(admin, false);
+                admin.displayBooks(false);
                 break;
             case 0:
                 admin = null;
@@ -83,7 +93,8 @@ public class Menu {
         }
     }
 
-    public static void showReaderFunctions(Reader reader) {
+    public static void showReaderFunctions(Reader reader)
+    {
         System.out.println("[1] Edit Account Information");
         System.out.println("[2] Show Previous Orders");
         System.out.println("[3] Search For A Book");
@@ -92,7 +103,8 @@ public class Menu {
         System.out.println("[0] Logout");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput()) {
+        switch (InputReader.getIntInput())
+        {
             case 1:
                 reader.editInformation(false);
                 break;
@@ -100,15 +112,18 @@ public class Menu {
                 reader.showPreviousOrders();
                 break;
             case 3:
-                reader.searchBook(reader, false);
+                reader.searchBook(false);
                 break;
             case 4:
-                reader.displayBooks(reader, false);
+                reader.displayBooks(false);
                 break;
             case 5:
-                if (!reader.shoppingCart.isShoppingCartEmpty()) {
-                    reader.shoppingCart.displayCart(reader);
-                } else {
+                if (!reader.getShoppingCart().isShoppingCartEmpty())
+                {
+                    reader.getShoppingCart().displayCart();
+                }
+                else
+                {
                     OutputPrinter.clearTerminal();
                     OutputPrinter.printWithColor("Shopping cart is empty!\n", "96m");
                     showReaderFunctions(reader);
@@ -126,9 +141,12 @@ public class Menu {
         }
     }
 
-    public static void showReaderMenu(boolean invalid) {
+    public static void showReaderMenu(boolean invalid)
+    {
         if (!invalid)
+        {
             OutputPrinter.clearTerminal();
+        }
 
         OutputPrinter.printWithColor("Reader\n", "96m");
         System.out.println("[1] Login");
@@ -136,12 +154,16 @@ public class Menu {
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput()) {
+        switch (InputReader.getIntInput())
+        {
             case 1:
                 Reader reader = (Reader) User.login("reader");
-                if (reader != null) {
+                if (reader != null)
+                {
                     showReaderFunctions(reader);
-                } else {
+                }
+                else
+                {
                     showReaderMenu(true);
                 }
                 break;

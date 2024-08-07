@@ -32,6 +32,31 @@ public class InputReader
         return -1;
     }
     
+    public static double getDoubleInput()
+    {
+        try
+        {
+            if (scanner.hasNextDouble())
+            {
+                double x = scanner.nextDouble();
+                scanner.nextLine();
+                return x;
+            }
+            else
+            {
+                OutputPrinter.invalidChoice();
+                scanner.nextLine();
+            }
+        }
+        catch (InputMismatchException e)
+        {
+            OutputPrinter.invalidChoice();
+            scanner.nextLine();
+        }
+
+        return -1;
+    }
+    
     public static String getStringInput()
     {
         return scanner.nextLine();

@@ -6,18 +6,23 @@ import java.util.Random;
 
 import utils.*;
 
-public class ShoppingCart {
+public class ShoppingCart
+{
     private ArrayList<Book> addedBooks;
+    private Reader reader;
 
-    public ShoppingCart()
+    public ShoppingCart(Reader reader)
     {
         addedBooks = new ArrayList<Book>();
+        this.reader = reader;
     }
+
     public boolean isShoppingCartEmpty()
     {
         return addedBooks.isEmpty();
     }
-    public void addToCart(String bookName, Reader reader)
+
+    public void addToCart(String bookName)
     {
         for (String book : FileManager.readFile(Constants.BOOKS_FILE_PATH))
         {
@@ -35,7 +40,7 @@ public class ShoppingCart {
         Menu.showReaderFunctions(reader);
     }
 
-    public void displayCart(Reader reader)
+    public void displayCart()
     {
         double total = 0;
 
@@ -75,7 +80,7 @@ public class ShoppingCart {
         if (choice == 'y' || choice == 'Y')
         {
             System.out.println("Please select a book using it's index: ");
-            removeFromCart(addedBooks.get(InputReader.getIntInput()), reader);
+            removeFromCart(addedBooks.get(InputReader.getIntInput()));
         }
 
         while (f1)
@@ -114,15 +119,16 @@ public class ShoppingCart {
         }
 
         Order order = new Order(Math.abs(new Random().nextInt()), new Date(), reader, total);
-        FileManager.appendFile(Constants.ORDERS_FILE_PATH, order.getOrderID() + "," + order.getDateCreated() + "," + order.getReader().getEmail() + "," + order.getTotal());
-        
+        FileManager.appendFile(Constants.ORDERS_FILE_PATH, order.getOrderID() + "," + order.getDateCreated() + "," +
+                        order.getReader().getEmail() + "," + order.getTotal());
+
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
         addedBooks.clear();
         Menu.showReaderFunctions(reader);
     }
 
-    public void removeFromCart(Book bookToRemove, Reader reader)
+    public void removeFromCart(Book bookToRemove)
     {
         int i;
         for (i = 0; i < addedBooks.size(); i++)

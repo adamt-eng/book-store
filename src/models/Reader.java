@@ -4,53 +4,78 @@ import java.util.ArrayList;
 
 import utils.*;
 
-public class Reader extends User {
+public class Reader extends User
+{
     private String phoneNumber, address, paymentMethod;
 
-    public ShoppingCart shoppingCart;
+    private ShoppingCart shoppingCart;
 
     public Reader(String username, String email, String password, String phoneNumber,
-            String address, String paymentMethod) {
+                    String address, String paymentMethod)
+    {
         super(username, email, password);
-        shoppingCart = new ShoppingCart();
-        setPhoneNumber(phoneNumber);
-        setAddress(address);
-        setPaymentMethod(paymentMethod);
+
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.paymentMethod = paymentMethod;
+
+        this.shoppingCart = new ShoppingCart(this);
     }
 
-    public String getPhoneNumber() {
+    public ShoppingCart getShoppingCart()
+    {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart)
+    {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
+    public String getAddress()
+    {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String address)
+    {
         this.address = address;
     }
 
-    public String getPaymentMethod() {
+    public String getPaymentMethod()
+    {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(String paymentMethod)
+    {
         this.paymentMethod = paymentMethod;
     }
 
-    public void editInformation(boolean invalid) {
+    public void editInformation(boolean invalid)
+    {
         if (!invalid)
+        {
             OutputPrinter.clearTerminal();
-
+        }
+        
         ArrayList<String> readersinfo = FileManager.readFile(Constants.READERS_FILE_PATH);
         int index = -1;
 
-        for (int i = 0; i < readersinfo.size(); i++) {
-            if (readersinfo.get(i).contains(email)) {
+        for (int i = 0; i < readersinfo.size(); i++)
+        {
+            if (readersinfo.get(i).contains(email))
+            {
                 index = i;
                 break;
             }
@@ -66,10 +91,12 @@ public class Reader extends User {
         System.out.println("[5] Payment Method: " + paymentMethod);
 
         char check = 'Y';
-        while (check == 'Y' || check == 'y') {
+        while (check == 'Y' || check == 'y')
+        {
             OutputPrinter.printWithColor("\nWhich information would you like to edit? (1/2/3/4/5):", "94m");
 
-            switch (InputReader.getIntInput()) {
+            switch (InputReader.getIntInput())
+            {
                 case 0:
                     OutputPrinter.clearTerminal();
                     OutputPrinter.printWithColor("Email cannot be edited!", "31m");
@@ -99,13 +126,16 @@ public class Reader extends User {
             check = InputReader.getStringInput().charAt(0);
         }
 
-        if (check == 'N' || check == 'n') {
+        if (check == 'N' || check == 'n')
+        {
             readersinfo.set(index, email + "," + username + "," + password + "," + phoneNumber + "," + address +
-                    "," +
-                    paymentMethod);
+                            "," +
+                            paymentMethod);
 
             FileManager.writeFile(Constants.READERS_FILE_PATH, readersinfo);
-        } else {
+        }
+        else
+        {
             OutputPrinter.invalidChoice();
             editInformation(true);
         }
@@ -115,23 +145,26 @@ public class Reader extends User {
         Menu.showReaderFunctions(this);
     }
 
-    public static void register() {
+    public static void register()
+    {
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Register\n", "96m");
 
-        System.out.print("Username: ");
-        String username = InputReader.getStringInput();
+        System.out.print("Email: ");
+        String email = InputReader.getStringInput();
 
-        for (String user : FileManager.readFile(Constants.READERS_FILE_PATH)) {
-            if (user.contains(username)) {
+        for (String user : FileManager.readFile(Constants.READERS_FILE_PATH))
+        {
+            if (user.contains(email))
+            {
                 OutputPrinter.clearTerminal();
-                OutputPrinter.printWithColor("An account already exists with this username!\n", "31m");
+                OutputPrinter.printWithColor("An account already exists with this email!\n", "31m");
                 Menu.showReaderMenu(true);
             }
         }
 
-        System.out.print("Email: ");
-        String email = InputReader.getStringInput();
+        System.out.print("Username: ");
+        String username = InputReader.getStringInput();
 
         System.out.print("Password: ");
         String password = InputReader.getStringInput();
@@ -146,35 +179,44 @@ public class Reader extends User {
         String paymentMethod = InputReader.getStringInput();
 
         FileManager.appendFile(Constants.READERS_FILE_PATH, email + "," + username + "," +
-                password + "," + phoneNumber + "," + address + "," + paymentMethod);
+                        password + "," + phoneNumber + "," + address + "," + paymentMethod);
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Registration successful!\n", "32m");
     }
 
-    public void showPreviousOrders() {
+    public void showPreviousOrders()
+    {
         String[] headers = { "Order ID", "Date Created", "Order Total" };
         int[] columnWidths = { 15, 25, 10, 1 };
 
-        for (int i = 0; i < headers.length; i++) {
+        for (int i = 0; i < headers.length; i++)
+        {
             System.out.printf("| %-" + columnWidths[i] + "s ", headers[i]);
         }
         System.out.println("|");
 
-        for (int width : columnWidths) {
+        for (int width : columnWidths)
+        {
             System.out.print("+");
-            for (int i = 0; i < width + 2; i++) {
+            for (int i = 0; i < width + 2; i++)
+            {
                 System.out.print("-");
             }
         }
         System.out.println("+");
 
         ArrayList<String> orders = FileManager.readFile(Constants.ORDERS_FILE_PATH);
-        for (int i = 0; i < orders.size(); i++) {
+        for (int i = 0; i < orders.size(); i++)
+        {
             String[] orderDetails = orders.get(i).split(",");
-            if (orderDetails[2].equals(this.email)) {
-                for (int j = 0; j < orderDetails.length; j++) {
-                    if (j != 2 ) {
+            if (orderDetails[2].equals(this.email))
+            {
+                for (int j = 0; j < orderDetails.length; j++)
+                {
+                    // Skip showing email (Index: 2)
+                    if (j != 2)
+                    {
                         System.out.printf("| %-" + columnWidths[j] + "s ", orderDetails[j]);
                     }
                 }
