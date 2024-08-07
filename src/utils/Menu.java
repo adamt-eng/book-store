@@ -110,7 +110,7 @@ public class Menu {
                 reader.displayBooks(reader, false);
                 break;
                 case 4:
-                if (reader.getShoppingCartSize() > 0) 
+                if (!reader.isShoppingCartEmpty()) 
                 {
                     reader.showReceipt();
                 }

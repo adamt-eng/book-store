@@ -10,9 +10,9 @@ public class Reader extends User implements ReaderService
     private String phoneNumber, address, paymentMethod;
     private ArrayList<Book> shoppingCart = new ArrayList<>();
 
-    public int getShoppingCartSize()
+    public boolean isShoppingCartEmpty()
     {
-        return shoppingCart.size();
+        return shoppingCart.isEmpty();
     }
 
     public Reader(String username, String email, String password, String phoneNumber,
@@ -251,7 +251,7 @@ public class Reader extends User implements ReaderService
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Book removed from cart successfully!\n", "32m");
-        Menu.showReaderFunctions(this);
+        showReceipt();
     }
 
     public static void register()
