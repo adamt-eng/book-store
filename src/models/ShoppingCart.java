@@ -7,15 +7,15 @@ import java.util.Random;
 import utils.*;
 
 public class ShoppingCart {
-    private ArrayList<Book> shoppingCart;
+    private ArrayList<Book> addedBooks;
 
     public ShoppingCart()
     {
-        shoppingCart = new ArrayList<Book>();
+        addedBooks = new ArrayList<Book>();
     }
     public boolean isShoppingCartEmpty()
     {
-        return shoppingCart.isEmpty();
+        return addedBooks.isEmpty();
     }
     public void addToCart(String bookName, Reader reader)
     {
@@ -24,7 +24,7 @@ public class ShoppingCart {
             String[] bookDetails = book.split(",");
             if (bookDetails[0].contains(bookName))
             {
-                shoppingCart.add(new Book(bookDetails[0], bookDetails[1], Double.parseDouble(bookDetails[2]),
+                addedBooks.add(new Book(bookDetails[0], bookDetails[1], Double.parseDouble(bookDetails[2]),
                                 Integer.parseInt(bookDetails[3]), bookDetails[4]));
                 break;
             }
@@ -39,7 +39,7 @@ public class ShoppingCart {
     {
         double total = 0;
 
-        for (Book book : shoppingCart)
+        for (Book book : addedBooks)
         {
             total += book.getPrice();
         }
@@ -53,9 +53,9 @@ public class ShoppingCart {
                         "------------------------------------------------------------------------------------------------------------------------------------------------");
 
         // Print table rows
-        for (int i = 0; i < shoppingCart.size(); i++)
+        for (int i = 0; i < addedBooks.size(); i++)
         {
-            Book book = shoppingCart.get(i);
+            Book book = addedBooks.get(i);
 
             System.out.printf("| %-8d | %-50s | %-40s | %-20s | %-10s |%n",
                             i, book.getName(), book.getAuthor(), book.getCategory(),
@@ -75,7 +75,7 @@ public class ShoppingCart {
         if (choice == 'y' || choice == 'Y')
         {
             System.out.println("Please select a book using it's index: ");
-            removeFromCart(shoppingCart.get(InputReader.getIntInput()), reader);
+            removeFromCart(addedBooks.get(InputReader.getIntInput()), reader);
         }
 
         while (f1)
@@ -97,13 +97,13 @@ public class ShoppingCart {
         }
 
         ArrayList<String> bookData = FileManager.readFile(Constants.BOOKS_FILE_PATH);
-        for (Book orderedBook : shoppingCart)
+        for (Book book : addedBooks)
         {
             for (int i = 0; i < bookData.size(); i++)
             {
                 String[] bookDetails = bookData.get(i).split(",");
 
-                if (bookDetails[0].trim().equals(orderedBook.getName().trim()))
+                if (bookDetails[0].trim().equals(book.getName().trim()))
                 {
                     bookDetails[3] = String.valueOf(Integer.parseInt(bookDetails[3]) - 1);
                     bookData.set(i, String.join(",", bookDetails));
@@ -118,21 +118,21 @@ public class ShoppingCart {
         
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
-        shoppingCart.clear();
+        addedBooks.clear();
         Menu.showReaderFunctions(reader);
     }
 
     public void removeFromCart(Book bookToRemove, Reader reader)
     {
         int i;
-        for (i = 0; i < shoppingCart.size(); i++)
+        for (i = 0; i < addedBooks.size(); i++)
         {
-            if (shoppingCart.get(i) == bookToRemove)
+            if (addedBooks.get(i) == bookToRemove)
             {
                 break;
             }
         }
-        shoppingCart.remove(i);
+        addedBooks.remove(i);
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Book removed from cart successfully!\n", "32m");
