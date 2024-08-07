@@ -9,8 +9,7 @@ public class Menu {
         System.out.println("[0] Exit");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput())
-        {
+        switch (InputReader.getIntInput()) {
             case 1:
                 showAdminMenu(false);
                 break;
@@ -27,8 +26,7 @@ public class Menu {
         }
     }
 
-    private static void showAdminMenu(boolean invalid)
-    {
+    private static void showAdminMenu(boolean invalid) {
         if (!invalid)
             OutputPrinter.clearTerminal();
 
@@ -37,16 +35,12 @@ public class Menu {
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput())
-        {
+        switch (InputReader.getIntInput()) {
             case 1: {
                 Admin admin = (Admin) User.login("admin");
-                if (admin != null)
-                {
+                if (admin != null) {
                     showAdminFunctions(admin);
-                }
-                else
-                {
+                } else {
                     showAdminMenu(true);
                 }
             }
@@ -68,8 +62,7 @@ public class Menu {
         System.out.println("[0] Logout");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput())
-        {
+        switch (InputReader.getIntInput()) {
             case 1:
                 admin.addBook();
                 break;
@@ -92,30 +85,30 @@ public class Menu {
 
     public static void showReaderFunctions(Reader reader) {
         System.out.println("[1] Edit Account Information");
-        System.out.println("[2] Search For A Book");
-        System.out.println("[3] Display All Books");
-        System.out.println("[4] Show Receipt");
+        System.out.println("[2] Show Previous Orders");
+        System.out.println("[3] Search For A Book");
+        System.out.println("[4] Display All Books");
+        System.out.println("[5] Show Receipt");
         System.out.println("[0] Logout");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput())
-        {
+        switch (InputReader.getIntInput()) {
             case 1:
                 reader.editInformation(false);
                 break;
             case 2:
+                reader.showPreviousOrders();
+                break;
+            case 3:
                 reader.searchBook(reader, false);
                 break;
-                case 3:
+            case 4:
                 reader.displayBooks(reader, false);
                 break;
-                case 4:
-                if (!reader.isShoppingCartEmpty()) 
-                {
-                    reader.showReceipt();
-                }
-                else 
-                {
+            case 5:
+                if (!reader.shoppingCart.isShoppingCartEmpty()) {
+                    reader.shoppingCart.displayCart(reader);
+                } else {
                     OutputPrinter.clearTerminal();
                     OutputPrinter.printWithColor("Shopping cart is empty!\n", "96m");
                     showReaderFunctions(reader);
@@ -133,8 +126,7 @@ public class Menu {
         }
     }
 
-    public static void showReaderMenu(boolean invalid)
-    {
+    public static void showReaderMenu(boolean invalid) {
         if (!invalid)
             OutputPrinter.clearTerminal();
 
@@ -144,16 +136,12 @@ public class Menu {
         System.out.println("[0] Return to menu");
         System.out.println("\nEnter your choice: ");
 
-        switch (InputReader.getIntInput())
-        {
+        switch (InputReader.getIntInput()) {
             case 1:
                 Reader reader = (Reader) User.login("reader");
-                if (reader != null)
-                {
+                if (reader != null) {
                     showReaderFunctions(reader);
-                }
-                else
-                {
+                } else {
                     showReaderMenu(true);
                 }
                 break;

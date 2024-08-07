@@ -55,7 +55,7 @@ public class Admin extends User implements AdminService
             }
         }
 
-        String[] tokens = booksinfo.get(i).split(", ");
+        String[] tokens = booksinfo.get(i).split(",");
 
         OutputPrinter.printWithColor("Book Details\n", "94m");
 
