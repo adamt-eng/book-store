@@ -32,7 +32,7 @@ public class Admin extends User implements AdminService
             price = InputReader.getDoubleInput();
         }
 
-        double stock = -1;
+        int stock = -1;
         while (stock == -1)
         {
             System.out.print("Stock: ");
