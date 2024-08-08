@@ -62,13 +62,15 @@ public class Reader extends User
         this.paymentMethod = paymentMethod;
     }
 
+
+
     public void editInformation(boolean invalid)
     {
         if (!invalid)
         {
             OutputPrinter.clearTerminal();
         }
-        
+
         ArrayList<String> readersinfo = FileManager.readFile(Constants.READERS_FILE_PATH);
         int index = -1;
 

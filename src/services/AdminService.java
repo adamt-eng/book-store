@@ -1,5 +1,7 @@
 package services;
 
+import models.Book;
+
 public interface AdminService
 {
     public void addBook();

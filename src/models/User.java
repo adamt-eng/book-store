@@ -91,27 +91,34 @@ public abstract class User implements BookService
         }
 
         OutputPrinter.printWithColor("Search for book using it's name:", "94m");
+        String query = InputReader.getStringInput();
 
         Book book = null;
 
         for (String line : FileManager.readFile(Constants.BOOKS_FILE_PATH))
         {
-            if (line.contains(InputReader.getStringInput()))
+            if (line.contains(query))
             {
                 OutputPrinter.clearTerminal();
 
                 String[] bookDetails = line.split(",");
                 int stock = Integer.parseInt(bookDetails[3]);
 
-                if (stock != 0)
+                if (stock != 0 || this instanceof Admin)
                 {
                     OutputPrinter.printWithColor("Book Details\n", "94m");
 
                     book = new Book(bookDetails[0], bookDetails[1], Double.parseDouble(bookDetails[2]), stock,
                                     bookDetails[4]);
-                }
 
-                break;
+                    System.out.println("Name: " + bookDetails[0]);
+                    System.out.println("Author: " + bookDetails[1]);
+                    System.out.println("Price: " + bookDetails[2]);
+                    System.out.println("Stock: " + stock);
+                    System.out.println("Category: " + bookDetails[4]);
+
+                    break;
+                }
             }
         }
 
