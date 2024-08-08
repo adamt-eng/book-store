@@ -62,8 +62,6 @@ public class Reader extends User
         this.paymentMethod = paymentMethod;
     }
 
-
-
     public void editInformation(boolean invalid)
     {
         if (!invalid)

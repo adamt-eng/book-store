@@ -12,8 +12,6 @@ public class Admin extends User implements AdminService
         super(username, email, password);
     }
 
-
-
     public void addBook()
     {
         OutputPrinter.clearTerminal();

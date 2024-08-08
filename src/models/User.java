@@ -91,6 +91,7 @@ public abstract class User implements BookService
         }
 
         OutputPrinter.printWithColor("Search for book using it's name:", "94m");
+        
         String query = InputReader.getStringInput();
 
         Book book = null;
@@ -159,25 +160,13 @@ public abstract class User implements BookService
         }
         System.out.println("+");
 
-        Admin admin = null;
-        Reader reader = null;
-
-        if (this instanceof Admin adminUser)
-        {
-            admin = adminUser;
-        }
-        else if (this instanceof Reader readerUser)
-        {
-            reader = readerUser;
-        }
-
         ArrayList<String> books = FileManager.readFile(Constants.BOOKS_FILE_PATH);
         ArrayList<Integer> indices = new ArrayList<Integer>();
         for (int i = 0; i < books.size(); i++)
         {
             String book = i + "," + books.get(i);
 
-            if (admin != null || !book.contains(",0,"))
+            if (this instanceof Admin || !book.contains(",0,"))
             {
                 indices.add(i);
                 String[] bookDetails = book.split(",");
@@ -197,11 +186,11 @@ public abstract class User implements BookService
         {
             case 0: {
                 OutputPrinter.clearTerminal();
-                if (admin != null)
+                if (this instanceof Admin admin)
                 {
                     Menu.showAdminFunctions(admin);
                 }
-                else
+                else if (this instanceof Reader reader)
                 {
                     Menu.showReaderFunctions(reader);
                 }
