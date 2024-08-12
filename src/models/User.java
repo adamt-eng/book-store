@@ -54,12 +54,12 @@ public abstract class User implements BookService
         String username = InputReader.getStringInput();
 
         System.out.print("Password: ");
-        String password = InputReader.getStringInput();
+        String password = SecurityService.hash(InputReader.getStringInput());
 
         for (String user : FileManager.readFile(accountType == "admin" ? Constants.ADMINS_FILE_PATH
                         : Constants.READERS_FILE_PATH))
         {
-            String[] userDetails = user.split(",");
+            String[] userDetails = SecurityService.decrypt(user).split(",");
             if (userDetails[1].equals(username) && userDetails[2].equals(password))
             {
                 OutputPrinter.clearTerminal();

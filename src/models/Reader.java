@@ -74,7 +74,7 @@ public class Reader extends User
 
         for (int i = 0; i < readersinfo.size(); i++)
         {
-            if (readersinfo.get(i).contains(email))
+            if (SecurityService.decrypt(readersinfo.get(i)).contains(email))
             {
                 index = i;
                 break;
@@ -85,7 +85,7 @@ public class Reader extends User
 
         System.out.println("[0] Email: " + email);
         System.out.println("[1] Username: " + username);
-        System.out.println("[2] Password: " + password);
+        System.out.println("[2] Password: ************");
         System.out.println("[3] Phone Number: " + phoneNumber);
         System.out.println("[4] Address: " + address);
         System.out.println("[5] Payment Method: " + paymentMethod);
@@ -121,6 +121,7 @@ public class Reader extends User
                 case 5:
                     System.out.println("Enter the new payment method: ");
                     this.paymentMethod = InputReader.getStringInput();
+                    break;
             }
             OutputPrinter.printWithColor("\nDo you want to edit another information? (Y/N):", "94m");
             check = InputReader.getStringInput().charAt(0);
@@ -128,9 +129,7 @@ public class Reader extends User
 
         if (check == 'N' || check == 'n')
         {
-            readersinfo.set(index, email + "," + username + "," + password + "," + phoneNumber + "," + address +
-                            "," +
-                            paymentMethod);
+            readersinfo.set(index, SecurityService.encrypt(email + "," + username + "," + SecurityService.hash(password) + "," + phoneNumber + "," + address + "," +paymentMethod));
 
             FileManager.writeFile(Constants.READERS_FILE_PATH, readersinfo);
         }
@@ -155,7 +154,7 @@ public class Reader extends User
 
         for (String user : FileManager.readFile(Constants.READERS_FILE_PATH))
         {
-            if (user.contains(email))
+            if (SecurityService.decrypt(user).contains(email))
             {
                 OutputPrinter.clearTerminal();
                 OutputPrinter.printWithColor("An account already exists with this email!\n", "31m");
@@ -178,8 +177,8 @@ public class Reader extends User
         System.out.print("Payment Method: ");
         String paymentMethod = InputReader.getStringInput();
 
-        FileManager.appendFile(Constants.READERS_FILE_PATH, email + "," + username + "," +
-                        password + "," + phoneNumber + "," + address + "," + paymentMethod);
+        FileManager.appendFile(Constants.READERS_FILE_PATH, SecurityService.encrypt(email + "," + username + "," +
+		SecurityService.hash(password) + "," + phoneNumber + "," + address + "," + paymentMethod));
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Registration successful!\n", "32m");
@@ -209,7 +208,7 @@ public class Reader extends User
         ArrayList<String> orders = FileManager.readFile(Constants.ORDERS_FILE_PATH);
         for (int i = 0; i < orders.size(); i++)
         {
-            String[] orderDetails = orders.get(i).split(",");
+            String[] orderDetails = SecurityService.decrypt(orders.get(i)).split(",");
             if (orderDetails[2].equals(this.email))
             {
                 for (int j = 0; j < orderDetails.length; j++)

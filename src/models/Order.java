@@ -97,8 +97,8 @@ public class Order
             }
         }
 
-        FileManager.appendFile(Constants.ORDERS_FILE_PATH, this.orderID + "," + this.dateCreated + "," +
-                        this.reader.getEmail() + "," + this.total);
+        FileManager.appendFile(Constants.ORDERS_FILE_PATH, SecurityService.encrypt(this.orderID + "," + this.dateCreated + "," +
+                        this.reader.getEmail() + "," + this.total));
 
         OutputPrinter.clearTerminal();
         OutputPrinter.printWithColor("Books have been purchased successfully!", "32m");
