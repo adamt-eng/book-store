@@ -14,7 +14,8 @@ The Book Store Management System is designed to facilitate online book shopping,
 - **General User Information**:
   - Username
   - Email
-  - Password
+  - Password (hashed for security)
+  - All user information is encrypted using AES-256 encryption, ensuring that sensitive data is well protected.
 
 - **Reader-Specific Information**:
   - Phone number
@@ -51,42 +52,13 @@ The Reader can perform the following actions:
 - **Edit Profile**: Update personal information.
 - **View Available Books**: Display a list of books currently in stock.
 - **Search Books**: Find books by different attributes.
-- **Order Books**: Purchase books, which automatically reduces the stock quantity.
+- **Order Books**: Purchase books, which automatically reduces the stock quantity. 
+  - Order information is also encrypted using AES-256 encryption.
 
-## Installation
-
-1. **Clone the Repository**
-
-   Clone the repository to your local machine using the following command:
-   ```bash
-   git clone https://github.com/adamt-eng/book-store.git
-   ```
-
-3. **Navigate to the Project Directory**
-
-   Move into the project directory:
-   ```bash
-   cd book-store
-   ```
-
-4. **Compile the Project**
-
-   Compile the Java source files using the following command:
-   ```bash
-   javac -d bin src/models/*.java src/services/*.java src/utils/*.java src/Main.java
-   ```
-   This command compiles all the Java files in the `src` directory and outputs the class files to the `bin` directory.
-
-5. **Run the Application**
-
-   After compilation, you can run the application by executing:
-   ```bash
-   java -cp bin Main
-   ```
-
-## Additional Information
+## Configuration
 
 - The application stores its data in text files located in the `resources` directory, which includes `admins.txt`, `books.txt`, `orders.txt`, and `readers.txt`.
+- All stored information is encrypted using AES-256 encryption, and passwords are securely hashed before storage.
 
 ## Phase 1 Details
 
