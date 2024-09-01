@@ -1,8 +1,4 @@
-# Book Store Management System
-
-## Book Store - Phase 1
-
-This repository contains the code and commits for the first phase of the Book Store Management System. In this phase, the focus is on building a console application that implements the core functionality of the project.
+# Book Store Management System (Phase 1)
 
 ## Project Overview
 
@@ -57,19 +53,48 @@ The Reader can perform the following actions:
 - **Search Books**: Find books by different attributes.
 - **Order Books**: Purchase books, which automatically reduces the stock quantity.
 
-## Phase 1 Details
+## Installation
 
-### Initial Development
+1. **Clone the Repository**
+
+   Clone the repository to your local machine using the following command:
+   ```bash
+   git clone https://github.com/adamt-eng/book-store.git
+   ```
+
+3. **Navigate to the Project Directory**
+
+   Move into the project directory:
+   ```bash
+   cd book-store
+   ```
+
+4. **Compile the Project**
+
+   Compile the Java source files using the following command:
+   ```bash
+   javac -d bin src/models/*.java src/services/*.java src/utils/*.java src/Main.java
+   ```
+   This command compiles all the Java files in the `src` directory and outputs the class files to the `bin` directory.
+
+5. **Run the Application**
+
+   After compilation, you can run the application by executing:
+   ```bash
+   java -cp bin Main
+   ```
+
+## Additional Information
+
+- The application stores its data in text files located in the `resources` directory, which includes `admins.txt`, `books.txt`, `orders.txt`, and `readers.txt`.
+
+## Phase 1 Details
 
 Phase 1 focuses on developing the core functionalities of the Book Store Management System as a console-based application.
 
 ## Transition to Phase 2
 
-After completing Phase 1, the project transitioned to Phase 2, where a graphical user interface (GUI) was developed. The codebase for the GUI can be found in the [book-store-gui](https://github.com/adamt-eng/book-store-gui) repository.
-
-### Phase 2 Development
-
-In Phase 2, the emphasis shifted to creating the GUI. The commits in the **book-store-gui** repository begin from a point where most of the core functionality was already established in this Phase 1 repository.
+After completing Phase 1, the project transitioned to Phase 2, where a graphical user interface (GUI) was developed. The codebase for the GUI can be found in the [book-store-gui](https://github.com/adamt-eng/book-store-gui) repository. The commits in the **book-store-gui** repository begin from a point where most of the core functionality was already established in this Phase 1 repository.
 
 ## Documentation
 
