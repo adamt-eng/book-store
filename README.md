@@ -60,25 +60,7 @@ The Reader can perform the following actions:
 - The application stores its data in text files located in the `resources` directory, which includes `admins.txt`, `books.txt`, `orders.txt`, and `readers.txt`.
 - All stored information is encrypted using AES-256 encryption, and passwords are securely hashed before storage.
 
-## Phase 1 Details
-
-Phase 1 focuses on developing the core functionalities of the Book Store Management System as a console-based application.
-
-## Transition to Phase 2
-
-After completing Phase 1, the project transitioned to Phase 2, where a graphical user interface (GUI) was developed. The codebase for the GUI can be found in the [book-store-gui](https://github.com/adamt-eng/book-store-gui) repository. The commits in the **book-store-gui** repository begin from a point where most of the core functionality was already established in this Phase 1 repository.
-
-## Documentation
-
-For comprehensive documentation of the final project, please refer to the README in the [book-store-gui](https://github.com/adamt-eng/book-store-gui) repository.
-
 ---
-
-# Book Store Management System (Phase 2)
-
-## Project Overview
-
-The Book Store Management System is an advanced application designed to facilitate online book shopping, catering to both **Admin** and **Reader** roles. This system has transitioned from a console-based application in [Phase 1](https://github.com/adamt-eng/book-store) to a full-fledged graphical user interface (GUI) in Phase 2.
 
 ## Transition from Phase 1 to Phase 2
 
