@@ -1,0 +1,23 @@
+@import 'common.css';
+
+#login {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.form-container {
+    -fx-background-image: url("../media/cozy-home-interior-anime-style.jpg");
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.form-container .button {
+    -fx-padding: 0 10 0 10;
+}
+
+.form-container .button:hover {
+    -fx-background-color: sienna;
+}

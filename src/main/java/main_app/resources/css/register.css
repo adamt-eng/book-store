@@ -1,0 +1,18 @@
+@import 'common.css';
+
+.top-background {
+    -fx-opacity: 0.7;
+}
+
+#login {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.form-container {
+    -fx-background-image: url("../media/cozy-home-interior-anime-style.jpg");
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+}
