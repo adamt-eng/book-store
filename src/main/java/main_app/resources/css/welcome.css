@@ -1,0 +1,25 @@
+@import 'common.css';
+
+#admin {
+    -fx-background-image: url("../media/medium-shot-senior-man-education-concept.jpg");
+}
+
+#reader {
+    -fx-background-image: url("../media/back-view-woman-choosing-book-from-shelf.jpg");
+}
+
+.center-button {
+	-fx-font-size:20px;
+	-fx-background-size: contain;  
+    -fx-pref-width: 300px;
+    -fx-pref-height: 400px;
+    -fx-font-size: 55px;
+    -fx-background-color:sienna ;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.center-button:hover {
+    -fx-background-color: #2980b9;
+}
